@@ -1,0 +1,26 @@
+.header-bar{
+  display: inline-flex;
+  width: 100%;
+  background-color: rgb(52, 50, 50);
+  color: white;
+  padding: 0.8rem;
+  padding-left: 1.2rem;
+
+}
+
+.header-bar h3{
+  padding: 1.2rem;
+  margin: 0;
+}
+
+.header-bar img{
+  height: 55px;
+  width: auto;
+
+}
+
+.verticalLine {
+  border-left:  solid grey;
+  height: 80%;
+}
+
