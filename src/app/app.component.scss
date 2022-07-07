@@ -25,7 +25,7 @@ $right-panel-min-width: 200px !default;
     background-color: var(--primary-background-color);
     box-shadow: var(--heavy-box-shadow);
     color: white;
-    position: fixed;
+    position: relative;
     right: 0;
     left: 0;
     z-index: 100;
@@ -40,20 +40,21 @@ $right-panel-min-width: 200px !default;
 .main-content {
     position: absolute;
     overflow: auto;
-    left: 400px;
-    right: 2px;
-    top: 50px;
-    bottom: 20px;
+    margin: auto;
+    width: 80%;
+    left: 10%;
+    right: 10%;
+    background-color: var(--secondary-background-color);
+    min-height: calc(100vh - 50px);
+    box-shadow: var(--heavy-box-shadow);
+
 }
 
-@media (max-width: 500px) {
+@media (max-width: 796px) {
     .main-content {
-        right: 0px;
+        width:100%;
     }
 
-    .right-panel {
-      bottom: 0px;
-    }
 }
 
 .slider-bar {
@@ -65,4 +66,11 @@ $right-panel-min-width: 200px !default;
     width: 15px;
     background-color: black;
     cursor: col-resize; height: 100%;
+}
+.main-inside{
+    margin: 1.2rem;
+    padding: 1.5rem;
+    border: 2px rgb(144, 144, 144) solid;
+    border-radius: 16px;
+    // min-height: 100%;
 }

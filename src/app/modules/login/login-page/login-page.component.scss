@@ -5,8 +5,10 @@
     position: relative;
     width: -webkit-fill-available;
     display: flex;
-    min-height: 100%;
+    min-height: 80;
     width: 100%;
+    max-height: 100%;
+    
 }
 
 .login-form{
@@ -21,7 +23,7 @@
     box-shadow: 10px black; 
     padding-top: 0;
     min-width: 300px;
-
+    box-shadow: var(--heavy-box-shadow);
 
 
 }
@@ -48,7 +50,7 @@
 }
 
 .card-header{
-    background:rgba(52, 50, 50);
+    background: var(--primary-background-color);
     border-top-left-radius: 0.8rem;
     border-top-right-radius: 0.8rem;
     padding: 1.2rem;
@@ -56,7 +58,4 @@
     font-weight: 600;
 
 
-}
-.sidebar{
-    display: none;
 }

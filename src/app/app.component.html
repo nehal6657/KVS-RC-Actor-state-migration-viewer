@@ -1,22 +1,30 @@
-<header class="header-bar">
-  <a href="https://aka.ms/portalsfx" target="_blank" tabindex="0" sfx-tree-set-focus selected="true" *ngIf="!hideAzure">
-    <div class="navbar-brand navbar-brand-azure">
-      <span>
-          Microsoft Azure
-      </span>
-    </div>
-    </a>
-  <span style="vertical-align: middle; margin-left: 15px;">
-    KVS-RC Actor state migration viewer 
-  </span>
+<div>
+  <header class="header-bar">
+    <a href="https://aka.ms/portalsfx" target="_blank" tabindex="0" sfx-tree-set-focus selected="true" *ngIf="!hideAzure">
+      <div class="navbar-brand navbar-brand-azure">
+        <span>
+            Microsoft Azure
+        </span>
+      </div>
+      </a>
+    <span style="vertical-align: middle; margin-left: 15px;">
+      KVS-RC Actor state migration viewer
+    </span>
   
+  
+  
+    <!-- push stuff to align right -->
+    <div style="margin-left: auto;"></div>
+    <div>
+      <app-refresh-rate [value]="refreshService.refreshRate" (rateChange)="refreshService.updateRefreshInterval($event)"
+                        [refresh]="refreshService.isRefreshing" (forceRefreshed)="attemptForceRefresh()"></app-refresh-rate>
+    </div>
+  <!--  -->
+  </header>
 
+  <div class="main-content">
 
-  <!-- push stuff to align right -->
-  <div style="margin-left: auto;"></div>
-  <div>
-    <app-refresh-rate [value]="refreshService.refreshRate" (rateChange)="refreshService.updateRefreshInterval($event)"
-                      [refresh]="refreshService.isRefreshing" (forceRefreshed)="attemptForceRefresh()"></app-refresh-rate>
+      <router-outlet></router-outlet>
+
   </div>
-<!--  -->
-</header>
+</div>
