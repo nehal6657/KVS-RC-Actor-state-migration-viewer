@@ -1,0 +1,32 @@
+@use '@angular/cdk';
+@use './Styles/var';
+@use '@angular/material' as mat;
+// For more information: https://material.angular.io/guide/theming
+@import '@angular/material/theming';
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+
+label {
+  margin-bottom: 0px;
+}
+
+body {
+  overflow: auto;
+  background-color: var(--accent-background-color);
+  margin: 0;
+  font-family: "Segoe UI",-apple-system,"Helvetica Neue","Lucida Grande",Trebuchet,Arial,sans-serif;
+  font-size: var(--font-size-default);
+  line-height: 1.42857;
+  color: var(--font-primary-color);
+    margin: 0;
+  padding: 0;
+  max-width: 100%;
+  background-color: rgb(92,92,92);
+}
+html,body {
+  height: 100%;
+}
