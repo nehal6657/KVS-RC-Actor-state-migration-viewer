@@ -95,6 +95,7 @@
             ],
             "styles": [
               "src/styles.scss",
+              "src/mif/icons.min.css",
               "./node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [

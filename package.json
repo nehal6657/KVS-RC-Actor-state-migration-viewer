@@ -38,6 +38,9 @@
     "@angular/router": "^14.0.4",
     "@ng-bootstrap/ng-bootstrap": "^12.1.2",
     "@popperjs/core": "^2.11.5",
+    "@types/adal": "^1.0.29",
+    "@types/adal-angular": "^1.0.2",
+    "adal-angular": "^1.0.18",
     "adslot-ui": "^31.0.1",
     "bootstrap": "^5.2.0-beta1",
     "jquery": "^3.6.0",
@@ -47,6 +50,7 @@
     "ng-metro4": "^2.0.1",
     "ngx-bootstrap": "^8.0.0",
     "rxjs": "~7.5.0",
+    "rxjs-compat": "^6.6.7",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

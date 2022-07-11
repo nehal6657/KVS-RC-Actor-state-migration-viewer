@@ -6,21 +6,20 @@ import { AppComponent } from './app.component';
 import { LoginModule } from './modules/login/login.module';
 import { RefreshRateComponent } from './shared/component/refresh-rate/refresh-rate.component';
 import { FormsModule } from '@angular/forms';
-import { NgMetro4Module } from 'ng-metro4';
-
+import { ProgressCardComponent } from './shared/component/progress-card/progress-card.component';
+//import { SidebarComponent } from './shared/component/sidebar/sidebar.component';
 @NgModule({
   declarations: [
     AppComponent,
-    RefreshRateComponent
+    RefreshRateComponent,
+    ProgressCardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     LoginModule,
     NgbModule,
-    FormsModule,
-    NgMetro4Module
-
+    FormsModule
   ],
   providers: [
   ],
