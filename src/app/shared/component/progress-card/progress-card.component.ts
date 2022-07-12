@@ -16,6 +16,7 @@ export class ProgressCardComponent {
     ['ongoing','idle','idle','idle'],
     ['completed','ongoing','idle','idle'] 
   ]; 
+  modeOfMigration: string = "auto";
 
 
 
