@@ -11,12 +11,13 @@ export class ProgressCardComponent {
   numberOfPartitions: number = 5;
   partitions = [
     ['ongoing','idle','idle','idle'], 
-    ['completed','completed','error','error'],
+    ['completed','completed','error','idle'],
     ['completed','completed','completed','completed'],
     ['ongoing','idle','idle','idle'],
     ['completed','ongoing','idle','idle'] 
   ]; 
   modeOfMigration: string = "auto";
+  showAbort: boolean = true; // if any partition completes then make this false
 
 
 
