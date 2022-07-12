@@ -33,7 +33,12 @@ $dashboard-small-padding-horizontal: 12px;
 }
 
 
-
+@media only screen and (max-width: 420px) {
+  .progress-card{
+    width: 320px;
+    margin: 4px;
+  }
+}
 
 
 
