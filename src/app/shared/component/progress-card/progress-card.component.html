@@ -1,0 +1,195 @@
+<div class="progress-card" *ngFor="let status of partitions; index as i;">
+    <div class="row1">
+      <div class="column">
+        <div class="arrows">
+            <div class="arrow" [ngClass]="{'ongoing': status[0] == 'ongoing', 'completed': status[0] == 'completed', 'error': status[0] == 'error', 'idle': status[0] == 'idle' }">
+                Copy
+              </div>
+              <div class="arrow" [ngClass]="{'ongoing': status[1] == 'ongoing', 'completed': status[1] == 'completed', 'error': status[1] == 'error', 'idle': status[1] == 'idle' }">
+                Catchup
+              </div>
+              <div class="arrow" [ngClass]="{'ongoing': status[2] == 'ongoing', 'completed': status[2] == 'completed', 'error': status[2] == 'error', 'idle': status[2] == 'idle' }">
+                Downtime
+              </div>
+              
+              <div class="arrow" [ngClass]="{'ongoing-end': status[3] == 'ongoing', 'completed-end': status[3] == 'completed', 'error-end': status[3] == 'error', 'idle-end': status[3] =='idle' }">
+                Completed
+              </div>
+
+        </div>
+      </div>
+      <div class="column" style="color:white;">
+        <h5>Progress: Partition {{i+1}}</h5>
+        <div class="progress1-text">
+            
+                <p>Migrating sequence number 5/16</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            
+        </div>
+    
+    
+        <div class="progress1-button" style="color: white;">
+            <button type="button" class="btn btn-info ">Invoke Downtime</button> <p> </p>
+            <button type="button" class="btn btn-info ">Abort</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!-- <div class="dashboard-wrapper">
+    <div class="container">
+        <h3 style="color: white;">Progress</h3>
+       
+
+            <div class="row">
+                <div class="col">
+                    <div class="arrow-steps clearfix">
+                              <div class="step current"> <span> Step 1</span> </div>
+                              <div class="step"> <span>Step 2 some words</span> </div>
+                              <div class="step"> <span> Step 3</span> </div>
+                              <div class="step"> <span>Step 4</span> </div>
+                                </div>
+                            <div class="nav clearfix">
+                            <a href="#" class="prev">Previous</a>
+                            <a href="#" class="next pull-right">Next</a>
+                    </div>
+                </div>
+            </div>
+            
+
+     
+
+        <div class="row">
+            
+            <div class="col">
+                <div class="progress1-text text-left">
+                    <ul>
+                        <li>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi magni necessitatibus .</li>
+                        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore aperiam </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="progress1-button">
+                    <button type="button" class="btn btn-info btn-block">Info</button>
+                    <br>
+                    <button type="button" class="btn btn-info btn-block">Info</button>
+                </div>
+            </div>
+        </div>
+            
+    </div>
+  </div>
+  <br><br>
+<div class="dashboard-wrapper row1">
+    <h3 style="color: white;"> Progress: </h3> <br>
+    
+      <div class="column" style="color: white;">
+            <div class="arrows">
+                <div class="arrow arrow--4" style="color: #fff; background-color: #23468c;">
+                    Lorem Ipsum
+                  </div>
+                  <div class="arrow arrow--4" style="background-color: #d9e3f7;     color: #666;">
+                    Lorem Ipsum
+                  </div>
+                  <div class="arrow arrow--6" style="background-color: #d9e3f7;     color: #666;">
+                    Lorem Ipsum
+                  </div>
+    
+            </div>
+            <div class="progress1-text column">
+                
+                    <ul>
+                        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat, accusamus?</li>
+                        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ipsum, mollitia repudiandae error dignissimos delectus.</li>
+                    </ul>
+                
+                
+                    <div class="progress1-button" style="display: inline-flex;">
+                        <button type="button" class="btn btn-info ">Info</button> <p> </p>
+                        <button type="button" class="btn btn-info ">Info</button>
+                    </div>
+                
+            </div>
+        </div>
+</div>
+
+<br><br> -->
+
+<!-- <div class="dashboard-wrapper">
+    <h3 style="color: white;"> Progress: </h3> <br>
+    
+      <div class="row" style="color: white;">
+            <div class="col-6">
+                <div class="fullwidth"> 
+                    <div class="container separator">
+                      <h3>Vertical layout</h3>
+              
+                      <ul class="progress-tracker progress-tracker--vertical">
+                        <li class="progress-step is-complete">
+                          <div class="progress-marker"></div>
+                          <div class="progress-text">
+                            <h4 class="progress-title">Step 1</h4>
+                            Summary text explaining this step to the user
+                          </div>
+                        </li>
+              
+                        <li class="progress-step is-complete">
+                          <div class="progress-marker"></div>
+                          <div class="progress-text">
+                            <h4 class="progress-title">Step 2</h4>
+                            Summary text explaining this step to the user
+                          </div>
+                        </li>
+              
+                        <li class="progress-step is-active" aria-current="step">
+                          <div class="progress-marker"></div>
+                          <div class="progress-text">
+                            <h4 class="progress-title">Step 3</h4>
+                            Summary text explaining this step to the user
+                          </div>
+                        </li>
+              
+                        <li class="progress-step">
+                          <div class="progress-marker"></div>
+                          <div class="progress-text">
+                            <h4 class="progress-title">Step 4</h4>
+                            Summary text explaining this step to the user
+                          </div>
+                        </li>
+              
+                        <li class="progress-step">
+                          <div class="progress-marker"></div>
+                          <div class="progress-text">
+                            <h4 class="progress-title">Step 5</h4>
+                            Summary text explaining this step to the user
+                          </div>
+                        </li>
+                      </ul>        
+                    
+                    </div>
+                  </div>
+    
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <ul>
+                        <li>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat, accusamus?</li>
+                        <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit ipsum, mollitia repudiandae error dignissimos delectus.</li>
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="progress1-button" style="display: inline-flex;">
+                        <button type="button" class="btn btn-info ">Info</button> <p> </p>
+                        <button type="button" class="btn btn-info ">Info</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div> -->
+
+
+<!-- <br> -->
+

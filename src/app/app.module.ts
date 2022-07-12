@@ -6,7 +6,11 @@ import { AppComponent } from './app.component';
 import { LoginModule } from './modules/login/login.module';
 import { RefreshRateComponent } from './shared/component/refresh-rate/refresh-rate.component';
 import { FormsModule } from '@angular/forms';
+import {MatButtonModule} from '@angular/material/button';
 import { ProgressCardComponent } from './shared/component/progress-card/progress-card.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatStepperModule} from '@angular/material/stepper';
+import { CommonModule } from '@angular/common';
 //import { SidebarComponent } from './shared/component/sidebar/sidebar.component';
 @NgModule({
   declarations: [
@@ -19,7 +23,16 @@ import { ProgressCardComponent } from './shared/component/progress-card/progress
     AppRoutingModule,
     LoginModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    MatButtonModule,
+    BrowserAnimationsModule,
+    MatStepperModule,
+    CommonModule
+  ],
+  exports: [
+    MatButtonModule,
+    MatStepperModule,
+    CommonModule
   ],
   providers: [
   ],

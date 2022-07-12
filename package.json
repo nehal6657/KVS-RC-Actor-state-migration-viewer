@@ -67,6 +67,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "progress-tracker": "^2.0.7",
     "typescript": "~4.7.2"
   }
 }

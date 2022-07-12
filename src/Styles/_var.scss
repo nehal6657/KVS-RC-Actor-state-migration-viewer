@@ -4,6 +4,7 @@ $detail-pane-pre-color: #d1d1d1 !default;
   --primary-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   --heavy-box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
   --primary-border-radius: 5px;
+  --primary-border-color: rgb(82, 82, 82);
 
   --primary-background-color: #262626;
   --accent-background-color: #191919;
@@ -37,5 +38,9 @@ $detail-pane-pre-color: #d1d1d1 !default;
   --chart-text-color: #6C7074;
 
   --disabled: gray;
+  --error: #c00b0b;
+  --ongoing: #edc904;
+  --completed: #057606;
+  --idle: #444444;
 }
 

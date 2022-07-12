@@ -43,6 +43,9 @@
                   [ngbTooltip]="(treeWidth === '8px' ? 'Expand' : 'Close') + ' tree view'"  tooltipClass="styled-tooltip" (click)="collapseSide()"></span>
           </div>
           <router-outlet id="view-container" ></router-outlet>
+          <div class="center">
+            <app-progress-card></app-progress-card>
+          </div>
         </div>
       </main>
     </div>
