@@ -25,6 +25,8 @@ export class AppComponent implements OnInit {
   hideAzure = false;
   hideSFXTest = false;
   hideSFXLogo = false;
+  showServices: boolean = false;
+  showService = [true, false];
 
   ngOnInit(): void {
     this.refreshService.init();
@@ -79,5 +81,8 @@ export class AppComponent implements OnInit {
      this.treeWidth = offsetWidth.toString() + 'px';
      this.rightOffset = this.treeWidth;
     // this.storageService.setValue('treeWidth', this.treeWidth);
+  }
+  showAllServices(){
+    this.showServices = !this.showServices;
   }
 }

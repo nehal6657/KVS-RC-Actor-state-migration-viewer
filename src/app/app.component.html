@@ -30,6 +30,57 @@
       <div class="left-panel left-bar"  [ngStyle]="{'width': smallScreenSize ? smallScreenLeftPanelWidth : treeWidth }">
           <nav class="tree-container" [attr.aria-hidden]="smallScreenSize ? smallScreenLeftPanelWidth === '0px' : false" role="navigation">
             <!-- <app-tree-view (treeResize)="resize($event)" [smallWindowSize]="smallScreenSize"  ></app-tree-view> -->
+            <div ngbDropdown class="dropdown services">
+              <button ngbDropdownToggle class="btn btn-secondary" type="button" id="dropdownMenuButton1" aria-expanded="false" style="font-size: larger;">
+              Services
+              </button>
+              <ul ngbDropdownMenu aria-labelledby="dropdownMenuButton1" class="dropdown-services">
+                <div ngbDropdown class="dropdown partitions">
+                  <button ngbDropdownToggle class="btn btn-secondary" type="button" id="dropdownMenuButton1" aria-expanded="false">
+                  Service 1
+                  </button>
+                  <ul ngbDropdownMenu aria-labelledby="dropdownMenuButton1">
+                    <li><a ngbDropdownItem href="baseUrl + /Serviceid + /partitionid">Partion 1</a></li>
+                    <li><a ngbDropdownItem>Partion 2</a></li>
+                    <li><a ngbDropdownItem>Partion 3</a></li>
+                    <li><a ngbDropdownItem>Partion 4</a></li>
+                    <li><a ngbDropdownItem>Partion 5</a></li>
+                  </ul>
+                </div>
+                <div ngbDropdown class="dropdown partitions">
+                  <button ngbDropdownToggle class="btn btn-secondary" type="button" id="dropdownMenuButton1" aria-expanded="false">
+                  Service 2
+                  </button>
+                  <ul ngbDropdownMenu aria-labelledby="dropdownMenuButton1">
+                    <li><a ngbDropdownItem>Partion 1</a></li>
+                    <li><a ngbDropdownItem>Partion 2</a></li>
+                    <li><a ngbDropdownItem>Partion 3</a></li>
+                  </ul>
+                </div>
+              </ul>
+
+            </div>
+
+            <div class="services">
+              <button (click)="showAllServices()" [ngClass]="{'selected': showServices}">Services Test</button>
+              <div *ngIf="showServices==true" class="service">
+                
+                  <button (click)="showAllServices()" [ngClass]="{'selected': showService[0]}">Services 1</button>
+                  <div class="partitions" *ngIf="showService[0]">
+                    <p>partition 1</p>
+                    <p>partition 2</p>
+                  </div>
+                  <button (click)="showAllServices()" [ngClass]="{'selected': showService[1]}">Services 2</button>
+                  <div class="partitions" *ngIf="showService[0]">
+                    <p>partition 1</p>
+                    <p>partition 2</p>
+                  </div>
+                
+              </div>
+            </div>
+
+
+
           </nav>
           <div class="slider-bar" appDrag (dragFinish)="resize($event)" *ngIf="!smallScreenSize">
         </div>
