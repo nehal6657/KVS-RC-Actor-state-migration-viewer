@@ -1,0 +1,26 @@
+.services{
+    color: white;
+    border: 2px solid white;
+    border-radius: var(--primary-border-radius);
+    margin: auto;
+    padding: 24px;
+}
+.services h4{
+    font-weight: 650;
+    text-decoration: underline;
+    text-transform: capitalize;
+}
+.services ul li{
+    background-color: var(--accent-background-color);
+    color: var(--font-primary-color);
+}
+.services ul li a{
+    color: var(--font-primary-color);
+    font-size: medium;
+    text-decoration: none;
+}
+.services ul li a:hover{
+    background-color: var(--primary-background-color);
+    padding: 5px;
+    border-radius: var(--primary-border-radius);
+}

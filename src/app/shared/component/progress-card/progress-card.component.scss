@@ -240,191 +240,33 @@ a, a:active {
 a:hover {
 	color: #999;
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////@at-root
-/// delete from here
-/* Breadcrups CSS */
 
-.arrow-steps .step {
-	font-size: 14px;
-	text-align: center;
-	color: #666;
-	cursor: default;
-	margin: 0 3px;
-	padding: 10px 10px 10px 30px;
-	min-width: 180px;
-	float: left;
-	position: relative;
-	background-color: #d9e3f7;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none; 
-  transition: background-color 0.2s ease;
+.column h5{
+  font-weight: 400;
 }
+.arrow p{
+  padding: 0;
+  margin: 0;
 
-.arrow-steps .step:after,
-.arrow-steps .step:before {
-	content: " ";
-	position: absolute;
-	top: 0;
-	right: -17px;
-	width: 0;
-	height: 0;
-	border-top: 19px solid transparent;
-	border-bottom: 17px solid transparent;
-	border-left: 17px solid #d9e3f7;	
-	z-index: 2;
-  transition: border-color 0.2s ease;
 }
+.hovertext:before {
+  content: attr(data-hover);
+  visibility: hidden;
+  opacity: 0;
+  width: max-content;
+  background-color: rgb(232 232 173 / 92%);
+  color: black;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 5px;
+  transition: opacity 1s ease-in-out;
 
-.arrow-steps .step:before {
-	right: auto;
-	left: 0;
-	border-left: 17px solid var(--primary-background-color);	
-	z-index: 0;
+  position: absolute;
+  z-index: 1;
+  left: 72%;
+  top: -10%;
 }
-
-.arrow-steps .step:first-child:before {
-	border: none;
+.hovertext:hover:before {
+  opacity: 1;
+  visibility: visible;
 }
-
-.arrow-steps .step:first-child {
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-}
-
-.arrow-steps .step span {
-	position: relative;
-}
-
-.arrow-steps .step span:before {
-	opacity: 0;
-	content: "✔";
-	position: absolute;
-	top: -2px;
-	left: -20px;
-}
-
-.arrow-steps .step.done span:before {
-	opacity: 1;
-	-webkit-transition: opacity 0.3s ease 0.5s;
-	-moz-transition: opacity 0.3s ease 0.5s;
-	-ms-transition: opacity 0.3s ease 0.5s;
-	transition: opacity 0.3s ease 0.5s;
-}
-
-.arrow-steps .step.current {
-	color: #fff;
-	background-color: #23468c;
-}
-
-.arrow-steps .step.current:after {
-	border-left: 17px solid #23468c;	
-}
-
-//  =========================================== 
-
-/* The button-maker */
-@mixin arrow-button($color, $background, $shadow, $font-size, $width, $height, $direction) {  
-    background: none;
-    border: 0;
-    font-size: $font-size;
-    line-height: $height;
-    position: relative;
-    width: $width;
-    height: $height;
-    
-    @if $direction == "down" {
-      transform: rotate(90deg);
-    }
-    
-    a {
-      color: $color;
-      text-decoration: none;
-      position: relative;
-      z-index: 10;
-    }
-    
-    &::before,
-    &::after {
-      background: $background;
-      border-radius: 2px;
-      content: '';
-      display: block;
-      position: absolute;
-        left: 0;
-        right: 0;
-      transition: all 1s;
-      height: $height/2;
-    }
-    
-  
-    &::before { 
-      box-shadow: 
-        -1px 1px 0 $shadow,
-        -2px 2px 0 $shadow,
-        -3px 3px 0 $shadow,
-        -4px 4px 0 $shadow;
-      transform: skew(45deg);
-      @if $direction == "left" { bottom: 0; z-index: 1 }
-      @else { top: 0; }
-    }
-  
-    &::after {
-      box-shadow: 1px 1px 0 $shadow, 
-        2px 2px 0 $shadow,
-        3px 3px 0 $shadow, 
-        4px 4px 0 $shadow;
-      transform: skew(-45deg);
-      @if $direction == "left" { top: 0;}
-      @else { bottom: 0; }
-    }
-    
-    &:hover::before,
-    &:hover::after {
-      background: lighten($background,15%);
-    }
-    
-    &:focus {
-        &::before,
-        &::after {
-          background: lighten($background,15%);
-        }
-        outline: 0;
-    }
-  }
-  
-
-  
-
-  .btn-down {
-    @include arrow-button(#fff, #29c0d5, #1897c0, 22px, 6em, 4em, down);
-    margin-top: 3em;
-  }
-  
-  @keyframes zoom {
-    25% {
-      transform: scale3d(1.5,1.5,0);
-    }
-    
-    50% {
-      transform: scale3d(1,1,0);
-    }
-    
-    75% {
-      transform: scale3d(1.25, 1.25, 0);
-    }
-  }
-  
-  @keyframes spin {
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  /* Page styling */
-  
-   button a {
-    top: -2px; // Better alignment for font
-  }
-
-

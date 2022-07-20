@@ -3,6 +3,7 @@ import { RefreshService } from './services/refresh.service';
 
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { environment } from 'src/environments/environment';
+import { GetMigrationListenerService } from './services/get-migration-listener.service';
 
 @Component({
   selector: 'app-root',
@@ -50,6 +51,7 @@ export class AppComponent implements OnInit {
   title = 'KVS-RC-Actor-state-migration-viewer';
   constructor(public refreshService: RefreshService,
               public liveAnnouncer: LiveAnnouncer,
+              public getmigrationListener: GetMigrationListenerService
   ){}
   
 

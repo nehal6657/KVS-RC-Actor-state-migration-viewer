@@ -11,12 +11,15 @@ import { ProgressCardComponent } from './shared/component/progress-card/progress
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatStepperModule} from '@angular/material/stepper';
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { ServiceSelectionModule } from './modules/service-selection/service-selection.module';
 //import { SidebarComponent } from './shared/component/sidebar/sidebar.component';
 @NgModule({
   declarations: [
     AppComponent,
     RefreshRateComponent,
     ProgressCardComponent
+
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,9 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     BrowserAnimationsModule,
     MatStepperModule,
-    CommonModule
+    CommonModule,
+    HttpClientModule,
+    ServiceSelectionModule
   ],
   exports: [
     MatButtonModule,
