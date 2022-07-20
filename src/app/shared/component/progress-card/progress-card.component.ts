@@ -13,6 +13,15 @@ import { Constants } from 'src/app/Common/Constants';
   styleUrls: ['./progress-card.component.scss', './vertical-progress.scss']
 })
 export class ProgressCardComponent {
+  // show/ hide progress details
+  showOverallProgress: boolean =  true;
+  showCopyProgress: boolean = false;
+  showCatchupProgress: boolean = false;
+  showDowntimeProgress: boolean = false;
+
+
+
+
   serviceID: string;
   applicationID: string;
   partitionNumber: number;
@@ -24,6 +33,7 @@ export class ProgressCardComponent {
   partitionMigrationProgress: string[] = [];
 
   migrationEndpoint: string;
+  migrationProgressDetails: MigrationProgressModel;
 
 
 
@@ -58,10 +68,6 @@ export class ProgressCardComponent {
     this.partitionNumber = 1;
     this.numberOfPartitions = this.allPartitions.length;
     this.partitions = [];
-    // for(var i:number = 0; i<this.numberOfPartitions; i++){
-    //   this.partitions.push(['completed', 'completed', 'ongoing', 'idle']);
-    // }
-
     this.modeOfMigration = 'auto';
     this.showAbort = true;
 
@@ -102,6 +108,9 @@ export class ProgressCardComponent {
     this.migrationListenerService.FetchMigrationProgress(migrationEndpoint).subscribe(
       resp => {
         migrationProgress = resp;
+        this.migrationProgressDetails = migrationProgress;
+        console.warn("nhvjabkd");
+        console.warn(resp);
 
         var progress = ['idle', 'idle', 'idle', 'idle'];
 
@@ -118,10 +127,6 @@ export class ProgressCardComponent {
           if(progress[3] == Constants.STATUS[2]){
             this.showAbort = false;
           }
-        
-
-
-        
         console.warn(resp);
       }
     )
