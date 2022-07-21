@@ -4,7 +4,7 @@ import { APIurls } from 'src/app/Common/APIurls';
 import { Applications } from 'src/app/models/Application';
 import { Instance } from 'src/app/models/Instance';
 import { Partition } from 'src/app/models/Partition';
-import { service } from 'src/app/models/Service';
+import { service, ServiceItem } from 'src/app/models/Service';
 import { GetMigrationListenerService } from 'src/app/services/get-migration-listener.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class ListServicesComponent implements OnInit {
   public listServices = {};
   public listPartitions = {};
   public listInstances = {};
-  public allServices : string[] = [];
+  public allServices : ServiceItem[] = [];
   public MigrationListener :string ='';
 
 
@@ -60,11 +60,9 @@ export class ListServicesComponent implements OnInit {
         this.services = resp;
         for(var item in this.services.Items){
           this.listServices[this.services.Items[item].Id]= ApplicationId;
-          this.allServices.push(this.services.Items[item].Id);
+          this.allServices.push(this.services.Items[item]);
           this.getAllPartitions(this.services.Items[item].Id);
         }
-        //console.log(this.listServices);
-        //console.warn(this.allServices);
        
       }
     );

@@ -3,8 +3,8 @@
     <h4>Select your RC service to migrate:</h4>
     <ul class="list-group list-group-flush">
 
-        <li class="list-group-item" *ngFor="let serviceid of allServices; index as i;">
-            <a routerLink="automigration/{{listServices[serviceid]}}/{{serviceid}}">Service: {{serviceid}} |  Applicaiton: {{listServices[serviceid]}} 
+        <li class="list-group-item" *ngFor="let service of allServices; index as i;">
+            <a routerLink="automigration/{{listServices[service.Id]}}/{{service.Id}}">Service: {{service.Name}} |  Applicaiton: {{listServices[service.Id]}} 
             </a>
         </li>
         
