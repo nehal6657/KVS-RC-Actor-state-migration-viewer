@@ -1,12 +1,23 @@
 
 <div class="services">
-    <h4>Select your RC service to migrate:</h4>
-    <ul class="list-group list-group-flush">
+    <span style="vertical-align: middle; margin-left: 15px; font-size: larger; font-weight: 600;">Select your RC service to migrate:</span>
 
-        <li class="list-group-item" *ngFor="let service of allServices; index as i;">
-            <a routerLink="automigration/{{listServices[service.Id]}}/{{service.Id}}">Service: {{service.Name}} |  Applicaiton: {{listServices[service.Id]}} 
-            </a>
+    <ul class="list-group list-group-flush">
+        <hr>
+
+        <li class="list-group-item" *ngFor="let app of listApplications; index as i;">
+            
+            <b>{{app}}</b>
+            <ul class="list-group list-group-flush">
+                <div *ngFor="let service of allServices; index as i;">
+                    <div class="" *ngIf="listServices[service.Id] == app"><a routerLink="automigration/{{listServices[service.Id]}}/{{service.Id}}">Service: {{service.Name}} |  Applicaiton: {{listServices[service.Id]}} 
+                    </a></div>
+                </div>
+                
+            </ul>
+            <hr>    
         </li>
         
     </ul>
+
 </div>
