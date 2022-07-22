@@ -2,22 +2,32 @@
 <div class="services">
     <span style="vertical-align: middle; margin-left: 15px; font-size: larger; font-weight: 600;">Select your RC service to migrate:</span>
 
-    <ul class="list-group list-group-flush">
-        <hr>
-
-        <li class="list-group-item" *ngFor="let app of listApplications; index as i;">
-            
-            <b>{{app}}</b>
-            <ul class="list-group list-group-flush">
-                <div *ngFor="let service of allServices; index as i;">
-                    <div class="" *ngIf="listServices[service.Id] == app"><a routerLink="automigration/{{listServices[service.Id]}}/{{service.Id}}">Service: {{service.Name}} |  Applicaiton: {{listServices[service.Id]}} 
-                    </a></div>
+    <div class="form-group">
+        <ul class="list-group list-group-flush">
+            <hr>
+    
+            <li class="list-group-item" *ngFor="let app of listApplications; index as i;">
+    
+                <p class="title">{{app}}</p>
+                <div *ngFor="let service of allServices" class="service-list">
+                    <div *ngIf="listServices[service.Id] == app">
+                        <label>
+                            <input type="checkbox" value="{{service.Name}}"
+                                [checked]="checked_Services[service.Id]"
+                                [(ngModel)]="checked_Services[service.Id]"
+                                (change)="updateSelectedServices(service.Id, $event)" />
+                                <a routerLink="automigration/{{listServices[service.Id]}}/{{service.Id}}"> {{service.Name}} </a>
+                        </label>
+                    </div>
                 </div>
-                
-            </ul>
-            <hr>    
-        </li>
+                <hr>
+            </li>
+        </ul>
+        <div class="progress1-button" style="color: white;">
+            <div ><button type="button" class="btn btn-info "><a routerLink="/automigration">Continue</a></button></div>
+        </div>
         
-    </ul>
+    </div>
 
+ 
 </div>

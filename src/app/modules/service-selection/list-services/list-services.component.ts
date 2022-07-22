@@ -6,6 +6,8 @@ import { Instance } from 'src/app/models/Instance';
 import { Partition } from 'src/app/models/Partition';
 import { service, ServiceItem } from 'src/app/models/Service';
 import { GetMigrationListenerService } from 'src/app/services/get-migration-listener.service';
+import { SelectedServicesService } from 'src/app/services/selected-services.service';
+import { selectedServices } from './selectedService';
 
 @Component({
   selector: 'app-list-services',
@@ -16,12 +18,12 @@ export class ListServicesComponent implements OnInit {
 
   
   public listApplications: string[] = [];
-  public listServices = {};
+  public listServices = {};  // serviceid , appid
   public listPartitions = {};
   public listInstances = {};
   public allServices : ServiceItem[] = [];
   public MigrationListener :string ='';
-
+  public checked_Services : selectedServices[] = []; 
 
   applications : Applications;
   services: service;
@@ -30,12 +32,47 @@ export class ListServicesComponent implements OnInit {
 
   constructor(private getmigrationListener: GetMigrationListenerService, 
               private route: ActivatedRoute,
-              private Apiurl: APIurls){
-    this.getAllApplications();
-  }
+              private Apiurl: APIurls,
+              private selectedServices: SelectedServicesService){}
+
   ngOnInit(): void {
-    
+    this.getAllApplications();
+    //this.checked_Services = this.selectedServices.selectedServices;
+    console.log(this.selectedServices.selectedServicesId);
+    console.warn(this.checked_Services);
   }
+
+  updateSelectedServices(serviceid, event){
+    if(event.target.checked){
+      console.log("nr");
+      var f: boolean = true;
+      for(var i=0 ; i < this.selectedServices.selectedServicesId.length; i++) {
+        if(this.selectedServices.selectedServicesId[i] == serviceid) {
+          f = false;
+       }
+     }
+     var objIndex = this.checked_Services.findIndex((obj => obj.serviceid == serviceid));
+     this.checked_Services[objIndex].checked = true;
+
+     if(f)this.selectedServices.selectedServicesId.push(serviceid);
+    }
+    
+    else{
+       for(var i=0 ; i < this.selectedServices.selectedServicesId.length; i++) {
+         if(this.selectedServices.selectedServicesId[i] == serviceid) {
+           this.selectedServices.selectedServicesId.splice(i,1);
+        }
+      }
+      console.log("rn");
+      var objIndex = this.checked_Services.findIndex((obj => obj.serviceid == serviceid));
+     this.checked_Services[objIndex].checked = false;
+    }
+    console.log(this.selectedServices.selectedServicesId);
+    console.warn(this.checked_Services);
+
+  }
+
+
 
   getAllApplications(){
     this.getmigrationListener.getAllApplications().subscribe(
@@ -44,10 +81,7 @@ export class ListServicesComponent implements OnInit {
         for(var item in this.applications.Items){
           this.listApplications.push(this.applications.Items[item].Id);
           this.getAllServices(this.applications.Items[item].Id);
-        }
-        //console.log(this.listApplications);
-
-       
+        }      
       }
     )
     
@@ -61,10 +95,24 @@ export class ListServicesComponent implements OnInit {
         for(var item in this.services.Items){
           this.listServices[this.services.Items[item].Id]= ApplicationId;
           this.allServices.push(this.services.Items[item]);
+          
+          if(this.checked_Services.hasOwnProperty(this.services.Items[item].Id)==false){
+            if(this.selectedServices.selectedServicesId.includes(this.services.Items[item].Id)){
+              this.checked_Services.push({serviceid: this.services.Items[item].Id, checked: true});
+            }else{
+              this.checked_Services.push({serviceid: this.services.Items[item].Id, checked: false});
+            }
+            
+          }
+          
           this.getAllPartitions(this.services.Items[item].Id);
+          
         }
+        this.selectedServices.AllServices = this.allServices;
+        this.selectedServices.listServices = this.listServices;
        
       }
+      
     );
   }
 
@@ -75,47 +123,14 @@ export class ListServicesComponent implements OnInit {
         this.partition = resp;
         for(var item in this.partition.Items){
           this.listPartitions[this.partition.Items[item].PartitionInformation.Id] = ServiceId;
-          this.getAllInstances(this.partition.Items[item].PartitionInformation.Id);
         }
         
       }
     )
   }
 
-  getAllInstances(PartitionId: string){
-    this.getmigrationListener.getAllInstances(PartitionId).subscribe(
-      resp=> {
-
-        this.instance = resp;
-        for(var item in this.instance.Items){
-          this.listInstances[this.instance.Items[item].ReplicaId] = PartitionId;
-          var migrationList = this.getMigrationListener(this.instance.Items[item].Address);
-          if ( typeof migrationList !== 'undefined'){
-            console.log("behjak");
-            console.warn(this.Apiurl.getMigrationUrl(migrationList));
-            this.MigrationListener = migrationList;
-            console.warn(migrationList);
-          }
-        }
-
-      }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-    )              
-  }
-
-  getMigrationListener(Endpoints: string){
-    var endpoints = JSON.parse(Endpoints);
-    return (endpoints["Endpoints"]["Migration Listener"]);
-  }
 
 
-
-
-  getKeys(map: Map<any, any>){
-    let keys = [];
-    for (let key of map)
-      keys.push(key);
-    //console.warn(keys);
-    return keys;
-  }
+ 
 
 }

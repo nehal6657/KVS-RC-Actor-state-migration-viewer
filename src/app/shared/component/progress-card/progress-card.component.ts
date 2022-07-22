@@ -109,8 +109,6 @@ export class ProgressCardComponent {
       resp => {
         migrationProgress = resp;
         this.migrationProgressDetails = migrationProgress;
-        console.warn("nhvjabkd");
-        console.warn(resp);
 
         var progress = ['idle', 'idle', 'idle', 'idle'];
 
@@ -127,7 +125,6 @@ export class ProgressCardComponent {
           if(progress[3] == Constants.STATUS[2]){
             this.showAbort = false;
           }
-        console.warn(resp);
       }
     )
 

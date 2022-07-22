@@ -103,6 +103,7 @@ $right-panel-min-width: 200px !default;
 .tree-container {
     height: 100%;
     margin-right: 15px;
+    overflow-x: scroll;
 }
 
 .main-container {
@@ -248,5 +249,18 @@ $right-panel-min-width: 200px !default;
 }
 .selected{
   background-color: var(--accent-darkblue) !important;
-  transition-delay: 20ms; 
+  transition-delay: 80ms; 
+  overflow: auto;
+  display: inline-block;
+}
+
+.services a{
+  text-decoration: none;
+  color: var(--font-primary-color);
+}
+.services a:hover{
+  background-color: var(--light-background-color) !important;
+  padding: 4px;
+  border-radius: var(--primary-border-radius);
+
 }

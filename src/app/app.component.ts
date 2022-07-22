@@ -4,6 +4,8 @@ import { RefreshService } from './services/refresh.service';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { environment } from 'src/environments/environment';
 import { GetMigrationListenerService } from './services/get-migration-listener.service';
+import { SelectedServicesService } from './services/selected-services.service';
+import { ServiceItem } from './models/Service';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +15,18 @@ import { GetMigrationListenerService } from './services/get-migration-listener.s
 export class AppComponent implements OnInit {
   @ViewChild('main') main: ElementRef;
 
+  
+  title = 'KVS-RC-Actor-state-migration-viewer';
+
+  selectedServices: string[] = [];
+  selectedServiceObjects = new Set<string>([]);
+  selectedServiceName: ServiceItem[] = [];
+  listServices: {} = {};
+
   smallScreenSize = false;
   smallScreenLeftPanelWidth = '0px';
 
-  public assetBase = environment.assetBase;
+  //public assetBase = environment.assetBase;
   treeWidth = '275px';
   // preserve the existing size for using
   previousTreeWidth = this.treeWidth;
@@ -27,15 +37,27 @@ export class AppComponent implements OnInit {
   hideSFXTest = false;
   hideSFXLogo = false;
   showServices: boolean = false;
-  showService = [true, false];
+  showService = [false, false];
 
   ngOnInit(): void {
     this.refreshService.init();
+    this.updateSelectedServices();
     
   }
   @HostListener('window:resize', ['$event.target'])
   onResize(event: Window) {
     this.checkWidth(event.innerWidth);
+  }
+
+  updateSelectedServices(){
+    this.selectedServices = this.SelectedServices.selectedServicesId;
+    this.listServices = this.SelectedServices.listServices;
+    for(var items of this.SelectedServices.AllServices){
+      if(this.selectedServices.includes(items.Id)){
+        this.selectedServiceObjects.add( JSON.stringify({Id: items.Id, Name: items.Name}));
+      }
+    }
+    this.selectedServiceName = Array.from(this.selectedServiceObjects).map(el => JSON.parse(el))
   }
 
   checkWidth(width: number) {
@@ -48,10 +70,10 @@ export class AppComponent implements OnInit {
     this.hideSFXLogo = width < (600 + widthReduction);
   }
 
-  title = 'KVS-RC-Actor-state-migration-viewer';
   constructor(public refreshService: RefreshService,
               public liveAnnouncer: LiveAnnouncer,
-              public getmigrationListener: GetMigrationListenerService
+              public getmigrationListener: GetMigrationListenerService,
+              public SelectedServices: SelectedServicesService
   ){}
   
 
@@ -86,5 +108,9 @@ export class AppComponent implements OnInit {
   }
   showAllServices(){
     this.showServices = !this.showServices;
+    this.updateSelectedServices();
+    console.log(this.selectedServiceName);
+    console.log(this.selectedServices);
+    console.log(this.SelectedServices.AllServices);
   }
 }
