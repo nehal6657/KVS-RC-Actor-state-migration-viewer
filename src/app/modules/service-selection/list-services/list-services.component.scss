@@ -29,11 +29,13 @@
 .service-list{
     margin-left: 20px;
 }
+.progress1-button{
+    text-align: center;
+}
 .progress1-button button{
-    width: 100%;
+    width: 75%;
     padding: 6px;
-    margin: 0px;
-    margin-bottom: 3px;
+    margin: auto;
     color: white;
     font-size: small;
     background-color: var(--primary-background-color);
