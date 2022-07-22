@@ -13,10 +13,9 @@
                     <div *ngIf="listServices[service.Id] == app">
                         <label>
                             <input type="checkbox" value="{{service.Name}}"
-                                [checked]="checked_Services[service.Id]"
-                                [(ngModel)]="checked_Services[service.Id]"
+                                [checked]="isChecked(service.Id)"
                                 (change)="updateSelectedServices(service.Id, $event)" />
-                                <a routerLink="automigration/{{listServices[service.Id]}}/{{service.Id}}"> {{service.Name}} </a>
+                                {{service.Name}}
                         </label>
                     </div>
                 </div>

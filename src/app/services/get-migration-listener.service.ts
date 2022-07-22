@@ -14,22 +14,25 @@ export class GetMigrationListenerService {
 
 
    getAllApplications(){
+    console.warn(this.ApiUrls.applicationsUrl);
     return this.http.get<any>(this.ApiUrls.applicationsUrl);
    }
 
    getAllServices(ApplicationId: string){
+    console.warn(this.ApiUrls.getServicesUrl(ApplicationId));
     return this.http.get<any>(this.ApiUrls.getServicesUrl(ApplicationId));
    }
 
    getAllPartitions(ServiceId: string){
+    console.warn(this.ApiUrls.getPartitionUrl(ServiceId));
     return this.http.get<any>(this.ApiUrls.getPartitionUrl(ServiceId));
    }
 
    getAllInstances(PartitionId: string){
+    console.warn(this.ApiUrls.getInstanceUrl(PartitionId));
     return this.http.get<any>(this.ApiUrls.getInstanceUrl(PartitionId));
    }   
    FetchMigrationProgress(migrationEndpoint: string){
-    var URL = "http://localhost:4200/fmp/aced0c08-673b-4276-bf69-95334029dbdf/133027837048242957/40dd3712-3163-4302-9451-604a61212d32/RcMigration/GetMigrationStatus";
     return this.http.get<any>(this.ApiUrls.getMigrationUrl(migrationEndpoint));
    }
 }

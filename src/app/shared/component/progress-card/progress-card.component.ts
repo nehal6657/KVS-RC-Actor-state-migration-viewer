@@ -58,6 +58,7 @@ export class ProgressCardComponent {
           this.getAllInstances(partition.Items[item].PartitionInformation.Id);
         }
         this.setPartitions();
+        console.log(this.partitions);
     });
 
 
@@ -77,6 +78,8 @@ export class ProgressCardComponent {
     this.partitionService.modeOfMigration = this.modeOfMigration;
     this.partitionService.showAbort = this.showAbort;
 
+    console.log(this.migrationEndpoint);
+
 
   }    
   getAllInstances(PartitionId: string){
@@ -84,9 +87,13 @@ export class ProgressCardComponent {
       resp=> {
         var instance: Instance;
         instance = resp;
+        console.log(resp);
         for(var item in instance.Items){
           //this.listInstances[this.instance.Items[item].ReplicaId] = PartitionId;
-          var migrationList = this.getMigrationListener(instance.Items[item].Address);
+          var migrationList = 'undefined';
+          if(instance.Items[item].Address.length > 0){
+            migrationList = this.getMigrationListener(instance.Items[item].Address);            
+          }
           if ( typeof migrationList !== 'undefined'){
             this.migrationEndpoint = migrationList;
             this.fetchMigrationProgress(this.migrationEndpoint);
@@ -107,7 +114,10 @@ export class ProgressCardComponent {
     var migrationProgress: MigrationProgressModel;
     this.migrationListenerService.FetchMigrationProgress(migrationEndpoint).subscribe(
       resp => {
+        console.warn(migrationEndpoint);
+        this.migrationEndpoint = migrationEndpoint;
         migrationProgress = resp;
+        console.warn(resp);
         this.migrationProgressDetails = migrationProgress;
 
         var progress = ['idle', 'idle', 'idle', 'idle'];

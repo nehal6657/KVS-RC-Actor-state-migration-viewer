@@ -68,7 +68,12 @@ export class ListServicesComponent implements OnInit {
      this.checked_Services[objIndex].checked = false;
     }
 
+    console.log(this.checked_Services);
 
+
+  }
+  isChecked(serviceid){
+    this.checked_Services.find(x => x.serviceid === serviceid).checked;
   }
 
 
