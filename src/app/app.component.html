@@ -27,7 +27,7 @@
             (click)="changeSmallScreenSizePanelState()" tabindex="0" [title]="smallScreenLeftPanelWidth === '0px' ? 'Open navigation tree panel' : 'Close navigation tree panel'">
       menu
     </button>
-      <div class="left-panel left-bar"  [ngStyle]="{'width': smallScreenSize ? smallScreenLeftPanelWidth : treeWidth }">
+      <div class="left-panel left-bar"  [ngStyle]="{'width': showLeftPane ? '280px' : '0px' }">
           <nav class="tree-container" [attr.aria-hidden]="smallScreenSize ? smallScreenLeftPanelWidth === '0px' : false" role="navigation">
             <!-- <app-tree-view (treeResize)="resize($event)" [smallWindowSize]="smallScreenSize"  ></app-tree-view> -->
 
@@ -56,7 +56,7 @@
         </div>
         <div class="slider-bar" style="cursor: initial;" *ngIf="smallScreenSize"></div>
     </div>
-    <div [ngStyle]="{'left': smallScreenSize ? '0px' : rightOffset }" class="right-panel main-content" (click)="smallScreenSize ? resize(0): null" (focusin)="smallScreenSize ? resize(0): null">
+    <div [ngStyle]="{'left': showLeftPane ? '280px' : '0px' }" class="right-panel main-content" (click)="smallScreenSize ? resize(0): null" (focusin)="smallScreenSize ? resize(0): null">
       <main>
         <div class="view-container" #main>
           <div class="expander-container" *ngIf="!smallScreenSize">

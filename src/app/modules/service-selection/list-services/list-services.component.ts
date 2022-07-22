@@ -38,13 +38,13 @@ export class ListServicesComponent implements OnInit {
   ngOnInit(): void {
     this.getAllApplications();
     //this.checked_Services = this.selectedServices.selectedServices;
-    console.log(this.selectedServices.selectedServicesId);
-    console.warn(this.checked_Services);
+    // console.log(this.selectedServices.selectedServicesId);
+    // console.warn(this.checked_Services);
   }
 
   updateSelectedServices(serviceid, event){
     if(event.target.checked){
-      console.log("nr");
+      
       var f: boolean = true;
       for(var i=0 ; i < this.selectedServices.selectedServicesId.length; i++) {
         if(this.selectedServices.selectedServicesId[i] == serviceid) {
@@ -63,12 +63,11 @@ export class ListServicesComponent implements OnInit {
            this.selectedServices.selectedServicesId.splice(i,1);
         }
       }
-      console.log("rn");
+
       var objIndex = this.checked_Services.findIndex((obj => obj.serviceid == serviceid));
      this.checked_Services[objIndex].checked = false;
     }
-    console.log(this.selectedServices.selectedServicesId);
-    console.warn(this.checked_Services);
+
 
   }
 

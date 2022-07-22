@@ -15,6 +15,6 @@ import { LoginPageComponent } from './login-page/login-page.component';
 })
 export class LoginModule {
   constructor() {
-    console.log('LoginModule loaded.');
+    //console.log('LoginModule loaded.');
   }
  }

@@ -1,11 +1,14 @@
 import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { RefreshService } from './services/refresh.service';
-
+import { ActivatedRoute, Route, Router, NavigationEnd} from '@angular/router';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { environment } from 'src/environments/environment';
 import { GetMigrationListenerService } from './services/get-migration-listener.service';
 import { SelectedServicesService } from './services/selected-services.service';
 import { ServiceItem } from './models/Service';
+import {filter} from 'rxjs/operators';
+
+
 
 @Component({
   selector: 'app-root',
@@ -25,6 +28,7 @@ export class AppComponent implements OnInit {
 
   smallScreenSize = false;
   smallScreenLeftPanelWidth = '0px';
+  showLeftPane = false;
 
   //public assetBase = environment.assetBase;
   treeWidth = '275px';
@@ -42,6 +46,17 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.refreshService.init();
     this.updateSelectedServices();
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd))
+      .subscribe((event : NavigationEnd)=> {
+          console.log(event.url);
+          if(event.url === '/services'){
+            this.showLeftPane = false;
+          }else{
+            this.showLeftPane = true;
+          }
+      });
     
   }
   @HostListener('window:resize', ['$event.target'])
@@ -73,7 +88,8 @@ export class AppComponent implements OnInit {
   constructor(public refreshService: RefreshService,
               public liveAnnouncer: LiveAnnouncer,
               public getmigrationListener: GetMigrationListenerService,
-              public SelectedServices: SelectedServicesService
+              public SelectedServices: SelectedServicesService,
+              public router: Router
   ){}
   
 
