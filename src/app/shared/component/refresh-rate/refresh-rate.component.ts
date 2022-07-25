@@ -14,7 +14,7 @@ export class RefreshRateComponent {
 
   @Output() rateChange = new EventEmitter<string>();
   @Output() forceRefreshed = new EventEmitter<any>();
-  refreshRate = 0;
+  public refreshRate:number = 0;
 
   displayRate: string | number;
 

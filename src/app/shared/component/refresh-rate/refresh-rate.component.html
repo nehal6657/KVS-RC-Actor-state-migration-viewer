@@ -6,9 +6,9 @@
   <input [(ngModel)]="refreshRate" type="range" list="tickmarks" step="1" min="0" max="5" (click)="changed()"
     ngbTooltip="Set the refresh rate" aria-label="The rate at which content is refreshed" tooltipClass="styled-tooltip">
   <button (click)="change(5)" class="flat-button rounded-button" ngbTooltip="Set refresh rate to 5 seconds."  tooltipClass="styled-tooltip"> Fast </button>
-  <button (click)="forceRefresh()" class="flat-button" data-cy="refresh"
+  <button (click)="forceRefresh()" style= "background: transparent; color: white; border: none;" class="flat-button" data-cy="refresh"
     aria-label="Force a refresh"  tooltipClass="styled-tooltip"
-    [ngbTooltip]="refresh ? 'Refreshing' : 'Force a refresh'"> <i class="mif-refresh mif-2x " [ngClass]="{'rotate': refresh}"></i> </button>
+    [ngbTooltip]="refresh ? 'Refreshing' : 'Force a refresh'"> <mat-icon class="mif-refresh mif-2x" style="background: transparent;" [ngClass]="{'rotate': refresh}">refresh</mat-icon> </button>
 </div>
 
 <datalist id="tickmarks">

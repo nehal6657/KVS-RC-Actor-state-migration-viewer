@@ -34,18 +34,23 @@ export class AppComponent implements OnInit {
   treeWidth = '275px';
   // preserve the existing size for using
   previousTreeWidth = this.treeWidth;
-
+  refreshRate: number = 2000;
   rightOffset: string = this.treeWidth;
   tabIndex = -1;
   hideAzure = false;
   hideSFXTest = false;
   hideSFXLogo = false;
-  showServices: boolean = false;
-  showService = [false, false];
+  showServices: boolean = true;
+  //showService = [false, false];
 
   ngOnInit(): void {
     this.refreshService.init();
-    this.updateSelectedServices();
+    this.refreshRate = Number(this.refreshService.refreshRate);
+    setInterval(() => {
+      this.updateSelectedServices();
+      this.refreshRate = Number(this.refreshService.refreshRate);
+      console.log(this.refreshRate);
+    }, this.refreshRate);  
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd))
@@ -123,7 +128,7 @@ export class AppComponent implements OnInit {
     // this.storageService.setValue('treeWidth', this.treeWidth);
   }
   showAllServices(){
-    this.showServices = !this.showServices;
+    //this.showServices = !this.showServices;
     this.updateSelectedServices();
     console.log(this.selectedServiceName);
     console.log(this.selectedServices);

@@ -53,15 +53,17 @@ export class ProgressCardComponent {
 
     });
 
-    this.migrationListenerService.getAllPartitions(this.serviceID).subscribe(resp => {
-      var partition: Partition = resp;
-        for(var item in partition.Items){
-          this.allPartitions.push(partition.Items[item].PartitionInformation.Id);
-          this.getAllInstances(partition.Items[item].PartitionInformation.Id);
-        }
-        this.setPartitions();
-        console.log(this.partitions);
-    });
+    setInterval(() => {
+      this.migrationListenerService.getAllPartitions(this.serviceID).subscribe(resp => {
+        var partition: Partition = resp;
+          for(var item in partition.Items){
+            this.allPartitions.push(partition.Items[item].PartitionInformation.Id);
+            this.getAllInstances(partition.Items[item].PartitionInformation.Id);
+          }
+          this.setPartitions();
+          console.log("updated progress");
+      })
+    }, 4000);
 
 
     

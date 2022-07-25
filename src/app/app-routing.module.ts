@@ -8,9 +8,9 @@ import { ProgressCardComponent } from './shared/component/progress-card/progress
 
 const routes: Routes = [
   { path: 'login', component: LoginPageComponent},
-  { path: 'automigration', component: MainPageComponent},
+  { path: 'migration', component: MainPageComponent},
   { path: 'services', component: ListServicesComponent},
-  { path: 'services/automigration/:appid/:serviceid', component: ProgressCardComponent}
+  { path: 'services/migration/:appid/:serviceid', component: ProgressCardComponent}
   // { path: 'manualmigration', component: ManualMigrationComponent}
 ];
 

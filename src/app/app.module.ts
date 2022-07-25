@@ -13,6 +13,9 @@ import {MatStepperModule} from '@angular/material/stepper';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ServiceSelectionModule } from './modules/service-selection/service-selection.module';
+import {MatIconModule} from '@angular/material/icon'
+
+
 //import { SidebarComponent } from './shared/component/sidebar/sidebar.component';
 @NgModule({
   declarations: [
@@ -32,7 +35,8 @@ import { ServiceSelectionModule } from './modules/service-selection/service-sele
     MatStepperModule,
     CommonModule,
     HttpClientModule,
-    ServiceSelectionModule
+    ServiceSelectionModule,
+    MatIconModule
   ],
   exports: [
     MatButtonModule,

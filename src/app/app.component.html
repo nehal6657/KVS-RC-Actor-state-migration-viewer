@@ -36,10 +36,10 @@
               <button (click)="showAllServices()" [ngClass]="{'selected': showServices}">Services Selected</button>
               <div *ngIf="showServices==true" class="service">
                   <div class="" *ngFor="let service of selectedServiceName; index as i;">
-                    <button (click)="showAllServices()" [ngClass]="{'selected': showService[i]}">
-                      <a routerLink="services/automigration/{{listServices[service.Id]}}/{{service.Id}}"> {{service.Name}} </a> 
+                    <button (click)="showAllServices()" >
+                      <a routerLink="services/migration/{{listServices[service.Id]}}/{{service.Id}}"> {{service.Name}} </a> 
                     </button>
-                    <div class="partitions" *ngIf="showService[i]">
+                    <div class="partitions">
 
                     </div>
 
