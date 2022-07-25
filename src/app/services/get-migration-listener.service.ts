@@ -35,4 +35,7 @@ export class GetMigrationListenerService {
    FetchMigrationProgress(migrationEndpoint: string){
     return this.http.get<any>(this.ApiUrls.getMigrationUrl(migrationEndpoint));
    }
+   abortMigration(){
+    return this.http.put<any>(this.ApiUrls.getAbortMigrationUrl(), {});
+   }
 }

@@ -76,7 +76,7 @@
     
         <div class="progress1-button" style="color: white;">
             <div  *ngIf="modeOfMigration === 'manual'"><button type="button" class="btn btn-info ">Invoke Downtime</button> <p> </p></div>
-            <div *ngIf="showAbort"><button type="button" class="btn btn-info ">Abort</button></div>
+            <div *ngIf="showAbort"><button type="button" class="btn btn-info" (click)="AbortMigration()">Abort</button></div>
         </div>
       </div>
     </div>

@@ -25,6 +25,11 @@ export class APIurls{
     private migrationProgressUrl_base = this.baseurl +"fmp";   
     private migrationProgressUrl_rt = "/RcMigration/GetMigrationStatus";
 
+    private migrationEndpoint = '';
+    private abortMigration_rt = "/RcMigration/AbortMigration";
+
+
+
     getPartitionUrl(ServiceId : string){
         return this.partitionUrl_base + ServiceId + this.partitionUrl_rt;
     }
@@ -47,7 +52,12 @@ export class APIurls{
             if(MigrationEndpoint[i] == '/')     {break;}
         }
         var mig = MigrationEndpoint.slice(i);
-        return this.migrationProgressUrl_base + mig + this.migrationProgressUrl_rt;
+        this.migrationEndpoint = this.migrationProgressUrl_base + mig;
+        return this.migrationEndpoint + this.migrationProgressUrl_rt;
+    }
+    getAbortMigrationUrl(){
+        return this.migrationEndpoint + this.abortMigration_rt;
+
     }
 
 }

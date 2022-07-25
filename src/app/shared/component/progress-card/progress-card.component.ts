@@ -19,8 +19,7 @@ export class ProgressCardComponent {
   showCatchupProgress: boolean = false;
   showDowntimeProgress: boolean = false;
 
-
-
+  refreshRate: number = 20000;
 
   serviceID: string;
   applicationID: string;
@@ -39,9 +38,12 @@ export class ProgressCardComponent {
 
   constructor(private partitionService: PartitionsService,
               private activatedRoute: ActivatedRoute,
-              private migrationListenerService: GetMigrationListenerService) { }
+              private migrationListenerService: GetMigrationListenerService
+              ) { }
 
   ngOnInit(): void {
+    
+    
     this.activatedRoute.params.subscribe(params =>{
       this.serviceID = params['serviceid'];
       this.applicationID = params['appid'];
@@ -92,7 +94,8 @@ export class ProgressCardComponent {
           //this.listInstances[this.instance.Items[item].ReplicaId] = PartitionId;
           var migrationList = 'undefined';
           if(instance.Items[item].Address.length > 0){
-            migrationList = this.getMigrationListener(instance.Items[item].Address);            
+            migrationList = this.getMigrationListener(instance.Items[item].Address);  
+            console.warn(migrationList);          
           }
           if ( typeof migrationList !== 'undefined'){
             this.migrationEndpoint = migrationList;
@@ -138,6 +141,12 @@ export class ProgressCardComponent {
       }
     )
 
+  }
+
+  AbortMigration(){
+    this.migrationListenerService.abortMigration().subscribe(
+      resp => {console.log("abort ",resp);}
+    )
   }
 
 
