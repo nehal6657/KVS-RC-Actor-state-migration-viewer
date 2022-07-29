@@ -1,4 +1,5 @@
 export interface MigrationProgressModel{
+    migrationMode: Number,
     startDateTimeUTC: Date,
     endDateTimeUTC: Date | null,
     status: number,
