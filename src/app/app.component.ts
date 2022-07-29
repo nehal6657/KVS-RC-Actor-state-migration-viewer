@@ -45,17 +45,17 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshService.init();
-    this.refreshRate = Number(this.refreshService.refreshRate);
+    this.refreshRate = Number(this.refreshService.refreshRate)*1000;
     setInterval(() => {
       this.updateSelectedServices();
-      this.refreshRate = Number(this.refreshService.refreshRate);
-      console.log(this.refreshRate);
+      this.refreshRate = Number(this.refreshService.refreshRate)*1000;
+      
     }, this.refreshRate);  
 
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd))
       .subscribe((event : NavigationEnd)=> {
-          console.log(event.url);
+          
           if(event.url === '/services'){
             this.showLeftPane = false;
           }else{
