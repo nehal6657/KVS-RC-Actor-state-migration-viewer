@@ -8,7 +8,7 @@ import { Observable, interval, Subscription, timer, Subject } from 'rxjs';
 })
 export class RefreshService {
   public isRefreshing = false;
-  public refreshRate  = '0';
+  public refreshRate  = '30';
   private autoRefreshInterval: Observable<any> = null;
   public refreshSubject: Subject<number> = new Subject();
   private currentSync: Subscription;

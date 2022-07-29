@@ -20,7 +20,7 @@ $dashboard-small-padding-horizontal: 12px;
     grid-template-columns: auto auto;
     vertical-align: top;
     height: 100%;
-    width: 430px; 
+    width: 380px; 
     border: 1px solid var(--accent-darkblue);
     padding: 1.2rem;
     margin:5px;
@@ -201,6 +201,17 @@ $dashboard-small-padding-horizontal: 12px;
     color: white;
     font-size: small;
     background-color: var(--primary-background-color);
+}
+.progress-card-button{
+    width: 80%;
+    padding: 6px;
+    margin: 0px;
+    margin-bottom: 3px;
+    color: white;
+    font-size: small;
+    background-color: var(--primary-background-color);
+    border: var(--accent-lightblue) 1px solid;
+    border-radius:  var(--primary-border-radius);
 }
 
 .clearfix:after {
