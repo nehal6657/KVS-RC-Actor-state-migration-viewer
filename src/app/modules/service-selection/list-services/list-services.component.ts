@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { APIurls } from 'src/app/Common/APIurls';
-import { Applications } from 'src/app/models/Application';
+import { allMigrationEndpoints } from 'src/app/models/allMigrationEndpoints';
+import { ApplicationItem, Applications } from 'src/app/models/Application';
 import { Instance } from 'src/app/models/Instance';
-import { Partition } from 'src/app/models/Partition';
+import { Partition, PartitionItem } from 'src/app/models/Partition';
 import { service, ServiceItem } from 'src/app/models/Service';
 import { GetMigrationListenerService } from 'src/app/services/get-migration-listener.service';
 import { SelectedServicesService } from 'src/app/services/selected-services.service';
@@ -25,6 +26,8 @@ export class ListServicesComponent implements OnInit {
   public MigrationListener :string ='';
   public checked_Services : selectedServices[] = []; 
 
+  public allMigrationListener: allMigrationEndpoints[];
+
   applications : Applications;
   services: service;
   partition: Partition;
@@ -37,9 +40,6 @@ export class ListServicesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllApplications();
-    //this.checked_Services = this.selectedServices.selectedServices;
-    // console.log(this.selectedServices.selectedServicesId);
-    // console.warn(this.checked_Services);
   }
 
   updateSelectedServices(serviceid, event){
@@ -68,7 +68,7 @@ export class ListServicesComponent implements OnInit {
      this.checked_Services[objIndex].checked = false;
     }
 
-    console.log(this.checked_Services);
+    
 
 
   }
@@ -83,12 +83,28 @@ export class ListServicesComponent implements OnInit {
       resp=> {
         this.applications = resp;
         for(var item in this.applications.Items){
-          this.listApplications.push(this.applications.Items[item].Id);
-          this.getAllServices(this.applications.Items[item].Id);
-        }      
+          var appid: string = this.applications.Items[item].Id;
+          this.listApplications.push(appid);
+
+          // update the global variable to store the application if not present
+          this.updateGlobalApplications(this.applications.Items[item]);
+          this.getAllServices(appid);
+        } 
+        console.warn("jgbsdcfhgcjushk");
+        console.warn(this.selectedServices.AllMigEndpoints);    
       }
     )
     
+  }
+  updateGlobalApplications(app: ApplicationItem){
+    if(!(this.selectedServices.AllMigEndpoints.some(o => o.app_id === app.Id))){
+      this.selectedServices.AllMigEndpoints.push(
+        {app_id: app.Id, 
+          app_name: app.Name, 
+          app_type: app.TypeName, 
+          service_details:[]
+        });
+    }
   }
 
   getAllServices(ApplicationId: string){
@@ -97,19 +113,17 @@ export class ListServicesComponent implements OnInit {
 
         this.services = resp;
         for(var item in this.services.Items){
-          this.listServices[this.services.Items[item].Id]= ApplicationId;
+          var serviceid: string = this.services.Items[item].Id;
+          this.listServices[serviceid]= ApplicationId;
           this.allServices.push(this.services.Items[item]);
           
-          if(this.checked_Services.hasOwnProperty(this.services.Items[item].Id)==false){
-            if(this.selectedServices.selectedServicesId.includes(this.services.Items[item].Id)){
-              this.checked_Services.push({serviceid: this.services.Items[item].Id, checked: true});
-            }else{
-              this.checked_Services.push({serviceid: this.services.Items[item].Id, checked: false});
-            }
-            
-          }
+          this.checkSelectedServices(serviceid);
+
+          // update the global variable to store the services of the given application
+          this.updateGlobalServices(this.services.Items[item], ApplicationId);
           
-          this.getAllPartitions(this.services.Items[item].Id);
+        
+          //this.getAllPartitions(this.services.Items[item].Id);
           
         }
         this.selectedServices.AllServices = this.allServices;
@@ -120,17 +134,32 @@ export class ListServicesComponent implements OnInit {
     );
   }
 
-  getAllPartitions(ServiceId: string) {
-    this.getmigrationListener.getAllPartitions(ServiceId).subscribe(
-      resp=> {
-  
-        this.partition = resp;
-        for(var item in this.partition.Items){
-          this.listPartitions[this.partition.Items[item].PartitionInformation.Id] = ServiceId;
-        }
-        
+  updateGlobalServices(service: ServiceItem, ApplicationId: string){
+    let obj = this.selectedServices.AllMigEndpoints.find((o, i) => {
+      if (o.app_id === ApplicationId ) {
+        if(!(this.selectedServices.AllMigEndpoints[i].service_details.some(o1 => o1.service_id === service.Id))){
+          this.selectedServices.AllMigEndpoints[i].service_details.push({
+              service_id: service.Id,
+              service_name: service.Name,
+              partition_details: []
+            })
+          }
+          return true;
       }
-    )
+  });
+
+  }
+
+
+  
+  checkSelectedServices(serviceid: string){
+    if(this.checked_Services.hasOwnProperty(serviceid)==false){
+      if(this.selectedServices.selectedServicesId.includes(serviceid)){
+        this.checked_Services.push({serviceid:serviceid, checked: true});
+      }else{
+        this.checked_Services.push({serviceid: serviceid, checked: false});
+      }
+    }
   }
 
 
