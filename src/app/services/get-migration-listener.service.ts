@@ -14,28 +14,30 @@ export class GetMigrationListenerService {
 
 
    getAllApplications(){
-    console.warn(this.ApiUrls.applicationsUrl);
     return this.http.get<any>(this.ApiUrls.applicationsUrl);
    }
 
    getAllServices(ApplicationId: string){
-    console.warn(this.ApiUrls.getServicesUrl(ApplicationId));
     return this.http.get<any>(this.ApiUrls.getServicesUrl(ApplicationId));
    }
 
    getAllPartitions(ServiceId: string){
-    console.warn(this.ApiUrls.getPartitionUrl(ServiceId));
     return this.http.get<any>(this.ApiUrls.getPartitionUrl(ServiceId));
    }
 
    getAllInstances(PartitionId: string){
-    console.warn(this.ApiUrls.getInstanceUrl(PartitionId));
     return this.http.get<any>(this.ApiUrls.getInstanceUrl(PartitionId));
    }   
    FetchMigrationProgress(migrationEndpoint: string){
     return this.http.get<any>(this.ApiUrls.getMigrationUrl(migrationEndpoint));
    }
    abortMigration(){
-    return this.http.put<any>(this.ApiUrls.getAbortMigrationUrl(), {});
+    return this.http.put<any>('fmp/RcMigration/StartMigration', {});
+   }
+   startMigration(){
+
+   }
+   invokeDowntime(){
+
    }
 }

@@ -4,9 +4,7 @@ import { Injectable } from "@angular/core";
     providedIn: 'root'
   })
 export class APIurls{
-    static getPartitionUrl(ServiceId: string) {
-      throw new Error('Method not implemented.');
-    }
+
     constructor(){
         
     }
@@ -26,7 +24,8 @@ export class APIurls{
     private migrationProgressUrl_rt = "/RcMigration/GetMigrationStatus";
 
     private migrationEndpoint = '';
-    private abortMigration_rt = "/RcMigration/AbortMigration";
+    private abortMigration_rt = "/RcMigration/StartMigration";
+    private abortMigration_base = "fmp";
 
 
 
@@ -52,11 +51,12 @@ export class APIurls{
             if(MigrationEndpoint[i] == '/')     {break;}
         }
         var mig = MigrationEndpoint.slice(i);
-        this.migrationEndpoint = this.migrationProgressUrl_base + mig;
-        return this.migrationEndpoint + this.migrationProgressUrl_rt;
+        this.migrationEndpoint =  mig;
+        return this.migrationProgressUrl_base+ this.migrationEndpoint + this.migrationProgressUrl_rt;
     }
     getAbortMigrationUrl(){
-        return this.migrationEndpoint + this.abortMigration_rt;
+        console.log(this.abortMigration_base + this.migrationEndpoint + this.abortMigration_rt);
+        return this.abortMigration_base + this.migrationEndpoint + this.abortMigration_rt;
 
     }
 
