@@ -13,5 +13,7 @@ export interface service_details{
 
 export interface partition_details{
     partition_id: string,
-    migEndpoint: string
+    migEndpoint: string,
+    progress: string[],
+    selected: boolean
 };
