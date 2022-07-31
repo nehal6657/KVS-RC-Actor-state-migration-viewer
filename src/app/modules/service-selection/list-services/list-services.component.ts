@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { APIurls } from 'src/app/Common/APIurls';
+import { Constants } from 'src/app/Common/Constants';
 import { allMigrationEndpoints } from 'src/app/models/allMigrationEndpoints';
 import { ApplicationItem, Applications } from 'src/app/models/Application';
 import { Instance } from 'src/app/models/Instance';
+import { MigrationProgressModel } from 'src/app/models/MigrationProgress';
 import { Partition, PartitionItem } from 'src/app/models/Partition';
 import { service, ServiceItem } from 'src/app/models/Service';
 import { GetMigrationListenerService } from 'src/app/services/get-migration-listener.service';
@@ -32,6 +34,7 @@ export class ListServicesComponent implements OnInit {
   services: service;
   partition: Partition;
   instance: Instance;
+  migrationProgressDetails: MigrationProgressModel;
 
   constructor(private getmigrationListener: GetMigrationListenerService, 
               private route: ActivatedRoute,
@@ -42,39 +45,8 @@ export class ListServicesComponent implements OnInit {
     this.getAllApplications();
   }
 
-  updateSelectedServices(serviceid, event){
-    if(event.target.checked){
-      
-      var f: boolean = true;
-      for(var i=0 ; i < this.selectedServices.selectedServicesId.length; i++) {
-        if(this.selectedServices.selectedServicesId[i] == serviceid) {
-          f = false;
-       }
-     }
-     var objIndex = this.checked_Services.findIndex((obj => obj.serviceid == serviceid));
-     this.checked_Services[objIndex].checked = true;
-
-     if(f)this.selectedServices.selectedServicesId.push(serviceid);
-    }
-    
-    else{
-       for(var i=0 ; i < this.selectedServices.selectedServicesId.length; i++) {
-         if(this.selectedServices.selectedServicesId[i] == serviceid) {
-           this.selectedServices.selectedServicesId.splice(i,1);
-        }
-      }
-
-      var objIndex = this.checked_Services.findIndex((obj => obj.serviceid == serviceid));
-     this.checked_Services[objIndex].checked = false;
-    }
-
-    
-
-
-  }
-  isChecked(serviceid){
-    this.checked_Services.find(x => x.serviceid === serviceid).checked;
-  }
+  
+ 
 
 
 
@@ -90,8 +62,8 @@ export class ListServicesComponent implements OnInit {
           this.updateGlobalApplications(this.applications.Items[item]);
           this.getAllServices(appid);
         } 
-        console.warn("jgbsdcfhgcjushk");
-        console.warn(this.selectedServices.AllMigEndpoints);    
+    
+        this.allMigrationListener = this.selectedServices.AllMigEndpoints;
       }
     )
     
@@ -117,13 +89,10 @@ export class ListServicesComponent implements OnInit {
           this.listServices[serviceid]= ApplicationId;
           this.allServices.push(this.services.Items[item]);
           
-          this.checkSelectedServices(serviceid);
-
           // update the global variable to store the services of the given application
           this.updateGlobalServices(this.services.Items[item], ApplicationId);
           
-        
-          //this.getAllPartitions(this.services.Items[item].Id);
+          this.getAllPartitions(this.services.Items[item].Id);
           
         }
         this.selectedServices.AllServices = this.allServices;
@@ -135,7 +104,7 @@ export class ListServicesComponent implements OnInit {
   }
 
   updateGlobalServices(service: ServiceItem, ApplicationId: string){
-    let obj = this.selectedServices.AllMigEndpoints.find((o, i) => {
+    let obj = this.selectedServices.AllMigEndpoints.find((o, i): true => {
       if (o.app_id === ApplicationId ) {
         if(!(this.selectedServices.AllMigEndpoints[i].service_details.some(o1 => o1.service_id === service.Id))){
           this.selectedServices.AllMigEndpoints[i].service_details.push({
@@ -150,17 +119,161 @@ export class ListServicesComponent implements OnInit {
 
   }
 
+  getAllPartitions(ServiceId: string) {
+    this.getmigrationListener.getAllPartitions(ServiceId).subscribe(
+      resp=> {
+        var partition: Partition = resp;
+        
+        for(var item in partition.Items){
+          var partitionid: string = partition.Items[item].PartitionInformation.Id;
+          this.getAllInstances(partitionid, ServiceId);
+          this.checkSelectedServices(this.listServices[ServiceId], ServiceId);
+        }
+        //this.setPartitions();
+   
+        
+      }
+    )
+  }
+
+  updateGlobalPartitions(ServiceId: string, partitionId: string, MigrationListener: string){
+    this.selectedServices.AllMigEndpoints.find((obj, i) => {
+      if(obj.app_id == this.selectedServices.listServices[ServiceId]){
+        
+        this.selectedServices.AllMigEndpoints[i].service_details.find((obj1, i1) => {
+          if(obj1.service_id === ServiceId){
+            
+            if(!(this.selectedServices.AllMigEndpoints[i].service_details[i1].partition_details.some(obj2 => obj2.partition_id === partitionId))){
+
+              this.selectedServices.AllMigEndpoints[i].service_details[i1].partition_details.push({
+                partition_id: partitionId,
+                migEndpoint: MigrationListener,
+                selected: false,
+                progress: []
+              });
+            } 
+          }
+        })
+      }
+    })
+  }
+
+  // collect the migration listener endpoint from the getInstance response
+  getAllInstances(PartitionId: string, serviceID: string){
+    this.getmigrationListener.getAllInstances(PartitionId).subscribe(
+      resp=> {
+        var instance: Instance;
+        instance = resp;
+        for(var item in instance.Items){
+          //this.listInstances[this.instance.Items[item].ReplicaId] = PartitionId;
+          var migrationList = 'undefined';
+          if(instance.Items[item].Address.length > 0){
+            migrationList = this.getMigrationListener(instance.Items[item].Address);  
+          }
+          if ( typeof migrationList !== 'undefined'){
+            //this.fetchMigrationProgress(migrationList);
+            
+          }else{
+            migrationList='';
+          }
+          // update the global variable to store the partitions of the given service
+          this.updateGlobalPartitions(serviceID, PartitionId, migrationList);
+
+        }
+
+      }                                                                                                                                                                                                                                                                                                                                                                           
+    )              
+  }
+
+  getMigrationListener(Endpoints: string){
+    var endpoints = JSON.parse(Endpoints);
+    return (endpoints["Endpoints"]["Migration Listener"]);
+  }
+
+
+
+  isCheckedService(app_id:string, service_id:string){
+    var checked: boolean = false;
+    let app1 = this.selectedServices.AllMigEndpoints.find((app, index1) => {
+      if (app.app_id === app_id) {
+          let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
+            if(service.service_id === service_id){
+              let partition1 = this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
+                
+                  checked = checked || this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected;
+              })
+            }
+          }) 
+          
+      }
+  });
+  return checked;
+
+}
+  isCheckedPartition(app_id: string, service_id: string, partition_id: string){
+    var checked: boolean = false;
+    let app1 = this.selectedServices.AllMigEndpoints.find((app, index1) => {
+      if (app.app_id === app_id) {
+          let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
+            if(service.service_id === service_id){
+              let partition1 = this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
+                if(partition.partition_id === partition_id){
+                  checked= this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected;
+                  return checked;
+                }
+              })
+            }
+          }) 
+          return true; // stop searching
+      }
+  });
+  
+
+  }
+
 
   
-  checkSelectedServices(serviceid: string){
-    if(this.checked_Services.hasOwnProperty(serviceid)==false){
-      if(this.selectedServices.selectedServicesId.includes(serviceid)){
-        this.checked_Services.push({serviceid:serviceid, checked: true});
-      }else{
-        this.checked_Services.push({serviceid: serviceid, checked: false});
+  checkSelectedServices(app_id:string, service_id: string){
+    var checked: boolean = false;
+    let app1 = this.selectedServices.AllMigEndpoints.find((app, index1) => {
+      if (app.app_id === app_id) {
+          let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
+            if(service.service_id === service_id){
+              let partition1 = this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
+                
+                  this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected = !this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected;
+                  
+                
+              })
+            }
+          }) 
+          return true; // stop searching
       }
-    }
+  });
+
+
+    
   }
+
+  checkSelectedPartitions(app_id:string, service_id: string, partition_id: string){
+
+    let app1 = this.selectedServices.AllMigEndpoints.find((app, index1) => {
+      if (app.app_id === app_id) {
+          let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
+            if(service.service_id === service_id){
+              let partition1 = this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
+                if(partition.partition_id === partition_id){
+                  this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected = !this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected;
+                  
+                }
+              })
+            }
+          }) 
+          return true; // stop searching
+      }
+    });
+  }
+
 
 
 

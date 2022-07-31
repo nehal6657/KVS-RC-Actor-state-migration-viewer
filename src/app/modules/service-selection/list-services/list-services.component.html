@@ -6,19 +6,28 @@
         <ul class="list-group list-group-flush">
             <hr>
     
-            <li class="list-group-item" *ngFor="let app of listApplications; index as i;">
+            <li class="list-group-item" *ngFor="let app of allMigrationListener; index as i;">
     
-                <p class="title">{{app}}</p>
-                <div *ngFor="let service of allServices" class="service-list">
-                    <div *ngIf="listServices[service.Id] == app">
+                <p class="title">{{app.app_name}}</p>
+                <div *ngFor="let service of app.service_details" class="service-list">
+
                         <label>
-                            <input type="checkbox" value="{{service.Name}}"
-                                [checked]="isChecked(service.Id)"
-                                (change)="updateSelectedServices(service.Id, $event)" />
-                                {{service.Name}}
+                            <input type="checkbox" value="{{service.service_name}}"
+                                [checked]="isCheckedService(app.app_id, service.service_id)"
+                                (change)="checkSelectedServices(app.app_id, service.service_id)" />
+                                {{service.service_name}}
                         </label>
+                        <p class="title mt-2">List of partitions:</p>
+                        <div class="partition-list" *ngFor="let partition of service.partition_details">
+                            <label>
+                                <input type="checkbox" value="{{partition.partition_id}}"
+                                [checked]="isCheckedPartition(app.app_id, service.service_id, partition.partition_id)"
+                                (change)="checkSelectedPartitions(app.app_id, service.service_id, partition.partition_id)"
+                                />
+                                {{partition.partition_id}}
+                            </label>
+                        </div>
                     </div>
-                </div>
                 <hr>
             </li>
         </ul>
