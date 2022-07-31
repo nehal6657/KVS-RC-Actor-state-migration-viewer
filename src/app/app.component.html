@@ -35,15 +35,28 @@
             <div class="services">
               <button (click)="showAllServices()" [ngClass]="{'selected': showServices}">Services Selected</button>
               <div *ngIf="showServices==true" class="service">
-                  <div class="" *ngFor="let service of selectedServiceName; index as i;">
+                  
                     <button (click)="showAllServices()" >
-                      <a routerLink="services/migration/{{listServices[service.Id]}}/{{service.Id}}"> {{service.Name}} </a> 
+                      <div class="" *ngFor="let app of allMigrationEndpoints">
+                        <div class="" *ngFor="let service of app.service_details">
+                         
+                          <div class="" *ngIf="isCheckedService(app.app_id, service.service_id)">
+                            <a routerLink="services/migration/{{app.app_id}}/{{service.service_id}}"> {{service.service_name}} </a>
+                            <div class="partitions" *ngFor="let partition of service.partition_details">
+                              <div class="" *ngIf="isCheckedPartition(app.app_id, service.service_id, partition.partition_id)">
+                                <a routerLink="services/migration/{{app.app_id}}/{{service.service_id}}/{{partition.partition_id}}"> {{partition.partition_id}} </a>
+                                
+                              </div>
+                              
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                      
                     </button>
-                    <div class="partitions">
 
-                    </div>
 
-                  </div>
+                  
                   
 
               </div>

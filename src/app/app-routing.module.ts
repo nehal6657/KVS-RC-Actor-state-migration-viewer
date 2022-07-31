@@ -10,7 +10,8 @@ const routes: Routes = [
   { path: 'login', component: LoginPageComponent},
   { path: 'migration', component: MainPageComponent},
   { path: 'services', component: ListServicesComponent},
-  { path: 'services/migration/:appid/:serviceid', component: ProgressCardComponent}
+  { path: 'services/migration/:appid/:serviceid', component: ProgressCardComponent},
+  { path: 'services/migration/:appid/:serviceid/:partitionid', component: ProgressCardComponent}
   // { path: 'manualmigration', component: ManualMigrationComponent}
 ];
 
