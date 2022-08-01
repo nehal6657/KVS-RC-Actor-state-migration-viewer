@@ -137,6 +137,7 @@ export class ListServicesComponent implements OnInit {
   }
 
   updateGlobalPartitions(ServiceId: string, partitionId: string, MigrationListener: string){
+    var migrationdummy = {} as MigrationProgressModel;
     this.selectedServices.AllMigEndpoints.find((obj, i) => {
       if(obj.app_id == this.selectedServices.listServices[ServiceId]){
         
@@ -149,13 +150,16 @@ export class ListServicesComponent implements OnInit {
                 partition_id: partitionId,
                 migEndpoint: MigrationListener,
                 selected: false,
-                progress: []
+                progress: [],
+                migration_details: migrationdummy
               });
             } 
           }
         })
       }
     })
+    this.allMigrationListener = this.selectedServices.AllMigEndpoints;
+    console.log(this.selectedServices.AllMigEndpoints);
   }
 
   // collect the migration listener endpoint from the getInstance response

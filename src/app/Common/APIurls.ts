@@ -57,7 +57,14 @@ export class APIurls{
     getAbortMigrationUrl(){
         console.log(this.abortMigration_base + this.migrationEndpoint + this.abortMigration_rt);
         return this.abortMigration_base + this.migrationEndpoint + this.abortMigration_rt;
+    }
 
+    getStartMigraitonUrl(){
+
+    }
+
+    getStartDowntimeUrl(){
+        
     }
 
 }

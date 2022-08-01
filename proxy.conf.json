@@ -9,7 +9,7 @@
       }
     },
     "/fmp/*": {
-      "target": "http://localhost:31013/",
+      "target": "http://localhost:31006/",
       "secure": true,
       "changeOrigin": true,
       "pathRewrite": {

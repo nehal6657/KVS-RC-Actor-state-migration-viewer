@@ -34,16 +34,6 @@ export class ProgressCardComponent {
   // partition id
   partitionID: string;
   
-  //number of partitions in current service
-  numberOfPartitions: number;
-
-  // store the partition id of all partitions in the service
-  allPartitions: string[] = []; 
-
-  // store the progress of each partition; each element in this array has string array of the following form
-  // ['status of copy phase', 'status of catchup phase', 'status of downtime phase' , 'status if completed or not']
-
-  //partitions: string[][] = []; 
 
   // mode of migration of app
   modeOfMigration: string;
@@ -99,12 +89,9 @@ export class ProgressCardComponent {
   
   // set the global variables of partition service after fetching from the api responses
   setPartitions(){  
-    this.numberOfPartitions = this.allPartitions.length;
     this.modeOfMigration = this.migrationProgressDetails.migrationMode==0? 'auto': 'manual';
     this.showAbort = true;
     this.showStart = this.modeOfMigration === 'manual' ? true: false;
-
-    this.partitionService.numberOfPartitions = this.numberOfPartitions;
     this.partitionService.modeOfMigration = this.modeOfMigration;
     this.partitionService.showAbort = this.showAbort;
   }    
@@ -230,6 +217,14 @@ export class ProgressCardComponent {
     this.migrationListenerService.abortMigration().subscribe(
       resp => {console.log("abort ",resp);}
     )
+  }
+
+  StartMigration(){
+    this.migrationListenerService.startMigration().subscribe();
+  }
+
+  InvokeDowntime(){
+    this.migrationListenerService.invokeDowntime().subscribe();
   }
 
 

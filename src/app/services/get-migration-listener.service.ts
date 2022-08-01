@@ -32,12 +32,12 @@ export class GetMigrationListenerService {
     return this.http.get<any>(this.ApiUrls.getMigrationUrl(migrationEndpoint));
    }
    abortMigration(){
-    return this.http.put<any>('fmp/RcMigration/StartMigration', {});
+    return this.http.put<any>('fmp/RcMigration/AbortMigration', {});
    }
    startMigration(){
-
+    return this.http.put<any>('fmp/RcMigration/StartMigration', {});
    }
    invokeDowntime(){
-
+    return this.http.put<any>('fmp/RcMigration/StartDowntime', {});
    }
 }
