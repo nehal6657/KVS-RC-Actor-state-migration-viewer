@@ -275,6 +275,29 @@ export class ListServicesComponent implements OnInit {
   }
 
 
+  hasListener(app_id: string, service_id: string): boolean{
+    var f: boolean = false;
+    let app1 = this.selectedServices.AllMigEndpoints.find((app, index1) => {
+      if (app.app_id === app_id) {
+          let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
+            if(service.service_id === service_id){
+              let partition1 = this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
+                
+                  if(this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].migEndpoint.length > 1){
+                    f = true;
+                  }
+                  
+                
+              })
+            }
+          }) 
+      }
+    });
+
+    return f;
+  }
+
+
 
 
  

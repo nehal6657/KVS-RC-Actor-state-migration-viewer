@@ -8,24 +8,26 @@
     
             <li class="list-group-item" *ngFor="let app of allMigrationListener; index as i;">
     
-                <p class="title">{{app.app_name}}</p>
+                <p class="title" style="font-size: 16px; font-weight: 550; text-decoration: underline;">{{app.app_name}}</p>
                 <div *ngFor="let service of app.service_details" class="service-list">
 
-                        <label>
-                            <input type="checkbox" value="{{service.service_name}}"
-                                [checked]="isCheckedService(app.app_id, service.service_id)"
-                                (change)="checkSelectedServices(app.app_id, service.service_id)" />
-                                {{service.service_name}}
-                        </label>
-                        <p class="title mt-2">List of partitions:</p>
-                        <div class="partition-list" *ngFor="let partition of service.partition_details">
+                        <div class="" *ngIf="hasListener(app.app_id, service.service_id)">
                             <label>
-                                <input type="checkbox" value="{{partition.partition_id}}"
-                                [checked]="isCheckedPartition(app.app_id, service.service_id, partition.partition_id)"
-                                (change)="checkSelectedPartitions(app.app_id, service.service_id, partition.partition_id)"
-                                />
-                                {{partition.partition_id}}
+                                <input type="checkbox" value="{{service.service_name}}"
+                                    [checked]="isCheckedService(app.app_id, service.service_id)"
+                                    (change)="checkSelectedServices(app.app_id, service.service_id)" />
+                                    {{service.service_name}}
                             </label>
+                            <p class="title mt-2">List of partitions:</p>
+                            <div class="partition-list" *ngFor="let partition of service.partition_details">
+                                <label>
+                                    <input type="checkbox" value="{{partition.partition_id}}"
+                                    [checked]="isCheckedPartition(app.app_id, service.service_id, partition.partition_id)"
+                                    (change)="checkSelectedPartitions(app.app_id, service.service_id, partition.partition_id)"
+                                    />
+                                    {{partition.partition_id}}
+                                </label>
+                            </div>
                         </div>
                     </div>
                 <hr>
