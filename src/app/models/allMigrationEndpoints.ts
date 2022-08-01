@@ -1,3 +1,5 @@
+import { MigrationProgressModel } from "./MigrationProgress"
+
 export interface allMigrationEndpoints{
     app_id: string,
     app_name: string,
@@ -15,5 +17,6 @@ export interface partition_details{
     partition_id: string,
     migEndpoint: string,
     progress: string[],
+    migration_details: MigrationProgressModel,
     selected: boolean
 };
