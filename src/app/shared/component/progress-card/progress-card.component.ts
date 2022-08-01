@@ -43,7 +43,7 @@ export class ProgressCardComponent {
   // store the progress of each partition; each element in this array has string array of the following form
   // ['status of copy phase', 'status of catchup phase', 'status of downtime phase' , 'status if completed or not']
 
-  partitions: string[][] = []; 
+  //partitions: string[][] = []; 
 
   // mode of migration of app
   modeOfMigration: string;
@@ -93,20 +93,18 @@ export class ProgressCardComponent {
     setInterval(() => {
       if(this.partitionID.length < 1)  {this.getAllPartitions(this.serviceID);}
       else {this.getAllInstances(this.partitionID);}
-    }, 4000);
+    }, 300);
   }
 
   
   // set the global variables of partition service after fetching from the api responses
   setPartitions(){  
     this.numberOfPartitions = this.allPartitions.length;
-    this.partitions = [];
     this.modeOfMigration = this.migrationProgressDetails.migrationMode==0? 'auto': 'manual';
     this.showAbort = true;
     this.showStart = this.modeOfMigration === 'manual' ? true: false;
 
     this.partitionService.numberOfPartitions = this.numberOfPartitions;
-    this.partitionService.partitions = this.partitions;
     this.partitionService.modeOfMigration = this.modeOfMigration;
     this.partitionService.showAbort = this.showAbort;
   }    
@@ -128,8 +126,6 @@ export class ProgressCardComponent {
   }
 
   updateGlobalPartitions(ServiceId: string, partitionId: string, MigrationListener: string, curr_progress: string[], migration_details: MigrationProgressModel){
-    console.log(ServiceId, partitionId);
-    console.log(MigrationListener, curr_progress, migration_details);
     this.selectedServices.AllMigEndpoints.find((obj, i) => {
       if(obj.app_id === this.selectedServices.listServices[ServiceId]){
         this.selectedServices.AllMigEndpoints[i].service_details.find((obj1, i1) => {
@@ -177,12 +173,10 @@ export class ProgressCardComponent {
           if ( typeof migrationList !== 'undefined'){
             this.migrationEndpoint = migrationList;
             progress = this.fetchMigrationProgress(this.migrationEndpoint)[0];
-            console.warn(this.partition_curr_progress, this.migrationProgressDetails);
           }else{
             this.migrationEndpoint='';
           }
           // update the global variable to store the partitions of the given service
-          console.log(migrationList);
           this.updateGlobalPartitions(this.serviceID, PartitionId, migrationList, this.partition_curr_progress, this.migrationProgressDetails);
 
         }
@@ -219,14 +213,12 @@ export class ProgressCardComponent {
           }
           progress[migrationProgress.currentPhase==5? 3:migrationProgress.currentPhase  - 1] = Constants.STATUS[migrationProgress.status];
 
-          this.partitions.push(progress);
 
           if(progress[3] == Constants.STATUS[2]){
             this.showAbort = false;
           }
           
           this.partition_curr_progress = progress;
-          console.warn(curr_progress);
 
       }
     )
