@@ -21,6 +21,7 @@ export class ProgressCardComponent {
   showCatchupProgress: boolean = false;
   showDowntimeProgress: boolean = false;
   showStart: boolean = false;
+  showPartitions: boolean = false;
 
   //refresh rate for fetching the migration progress for the partitions in ms
   refreshRate: number = 20000;
@@ -35,8 +36,6 @@ export class ProgressCardComponent {
   partitionID: string;
   
 
-  // mode of migration of app
-  modeOfMigration: string;
 
   // show abort only when migration is not complete
   showAbort: boolean; // if any partition completes then make this false
@@ -83,18 +82,55 @@ export class ProgressCardComponent {
     setInterval(() => {
       if(this.partitionID.length < 1)  {this.getAllPartitions(this.serviceID);}
       else {this.getAllInstances(this.partitionID);}
-    }, 300);
+    }, 4000);
   }
 
   
   // set the global variables of partition service after fetching from the api responses
   setPartitions(){  
-    this.modeOfMigration = this.migrationProgressDetails.migrationMode==0? 'auto': 'manual';
     this.showAbort = true;
-    this.showStart = this.modeOfMigration === 'manual' ? true: false;
-    this.partitionService.modeOfMigration = this.modeOfMigration;
     this.partitionService.showAbort = this.showAbort;
   }    
+  isCheckedPartition(app_id: string, service_id: string, partition_id: string){
+    var checked: boolean = false;
+    let app1 = this.selectedServices.AllMigEndpoints.find((app, index1) => {
+      if (app.app_id === app_id) {
+          let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
+            if(service.service_id === service_id){
+              let partition1 = this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
+                if(partition.partition_id === partition_id){
+                  checked= this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected;
+                  return checked;
+                }
+              })
+            }
+          }) 
+          return true; // stop searching
+      }
+  });
+  return checked;
+
+  }
+
+  checkSelectedPartitions(app_id:string, service_id: string, partition_id: string){
+
+    let app1 = this.selectedServices.AllMigEndpoints.find((app, index1) => {
+      if (app.app_id === app_id) {
+          let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
+            if(service.service_id === service_id){
+              let partition1 = this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
+                if(partition.partition_id === partition_id){
+                  this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected = !this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected;
+                  
+                }
+              })
+            }
+          }) 
+          return true; // stop searching
+      }
+    });
+  }
+
 
 
   getAllPartitions(ServiceId: string) {
@@ -227,10 +263,92 @@ export class ProgressCardComponent {
     this.migrationListenerService.invokeDowntime().subscribe();
   }
 
+  ShowStart(app_id: string, service_id: string, partition_id: string){
+    var f: boolean = false;
+    this.selectedServices.AllMigEndpoints.find((app, app_ind) => {
+      
+      if(app_id === app.app_id){ 
+          this.selectedServices.AllMigEndpoints[app_ind].service_details.find((service, service_ind) =>{
+          if(service_id === service.service_id){
+            this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details.find((partition, partition_ind) => {
+              if(partition_id === partition.partition_id){
+                if(partition.progress[0] === 'idle'){
+                  f = true;
+                }
+              }
+            })
+          }
+        })
+      }
+    })
+    return f;
+  }
+  ShowAbort(app_id: string, service_id: string, partition_id: string){
+    var f: boolean = true;
+    this.selectedServices.AllMigEndpoints.find((app, app_ind) => {
+      
+      if(app_id === app.app_id){ 
+          this.selectedServices.AllMigEndpoints[app_ind].service_details.find((service, service_ind) =>{
+          if(service_id === service.service_id){
+            this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details.find((partition, partition_ind) => {
+              if(partition_id === partition.partition_id){
+                if(partition.progress[3] === 'completed'){
+                  f = false;
+                }
+              }
+            })
+          }
+        })
+      }
+    })
+    return f;
+  }
+  modeOfMigration(app_id: string, service_id: string, partition_id: string){
+    var f: boolean = true;
+    this.selectedServices.AllMigEndpoints.find((app, app_ind) => {
+      
+      if(app_id === app.app_id){ 
+          this.selectedServices.AllMigEndpoints[app_ind].service_details.find((service, service_ind) =>{
+          if(service_id === service.service_id){
+            this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details.find((partition, partition_ind) => {
+              if(partition_id === partition.partition_id){
+                if(partition.migration_details.migrationMode === 0){
+                  f = false;
+                }
+              }
+            })
+          }
+        })
+      }
+    })
+    return f;
+  }
+  modeOfMigrationManual(app_id: string, service_id: string){
+    var f: boolean = true;
+    this.selectedServices.AllMigEndpoints.find((app, app_ind) => {
+      
+      if(app_id === app.app_id){ 
+          this.selectedServices.AllMigEndpoints[app_ind].service_details.find((service, service_ind) =>{
+          if(service_id === service.service_id){
+            this.selectedServices.AllMigEndpoints[app_ind].service_details[service_ind].partition_details.find((partition, partition_ind) => {
+              
+                if(partition.migration_details.migrationMode === 0){
+                  f = false;
+        
+              }
+            })
+          }
+        })
+      }
+    })
+    return f;
+  }
 
 
 
-
+  toggleList(){
+    this.showPartitions = !this.showPartitions;
+  }
 
 }
 
