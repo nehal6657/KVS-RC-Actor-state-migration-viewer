@@ -15,19 +15,12 @@
                             <label>
                                 <input type="checkbox" value="{{service.service_name}}"
                                     [checked]="isCheckedService(app.app_id, service.service_id)"
-                                    (change)="checkSelectedServices(app.app_id, service.service_id)" />
+                                    (click)="checkSelectedServices(app.app_id, service.service_id)" 
+                                    
+                                    />
                                     {{service.service_name}}
                             </label>
-                            <p class="title mt-2">List of partitions:</p>
-                            <div class="partition-list" *ngFor="let partition of service.partition_details">
-                                <label>
-                                    <input type="checkbox" value="{{partition.partition_id}}"
-                                    [checked]="isCheckedPartition(app.app_id, service.service_id, partition.partition_id)"
-                                    (change)="checkSelectedPartitions(app.app_id, service.service_id, partition.partition_id)"
-                                    />
-                                    {{partition.partition_id}}
-                                </label>
-                            </div>
+                            
                         </div>
                     </div>
                 <hr>

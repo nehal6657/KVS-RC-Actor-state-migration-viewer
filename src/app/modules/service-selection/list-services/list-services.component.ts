@@ -35,6 +35,7 @@ export class ListServicesComponent implements OnInit {
   partition: Partition;
   instance: Instance;
   migrationProgressDetails: MigrationProgressModel;
+  checked: boolean = false;
 
   constructor(private getmigrationListener: GetMigrationListenerService, 
               private route: ActivatedRoute,
@@ -175,8 +176,7 @@ export class ListServicesComponent implements OnInit {
             migrationList = this.getMigrationListener(instance.Items[item].Address);  
           }
           if ( typeof migrationList !== 'undefined'){
-            //this.fetchMigrationProgress(migrationList);
-            
+            this.MigrationListener = migrationList;
           }else{
             migrationList='';
           }
@@ -197,21 +197,22 @@ export class ListServicesComponent implements OnInit {
 
 
   isCheckedService(app_id:string, service_id:string){
-    var checked: boolean = false;
+    this.checked = false;
     let app1 = this.selectedServices.AllMigEndpoints.find((app, index1) => {
       if (app.app_id === app_id) {
           let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
             if(service.service_id === service_id){
               let partition1 = this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
-                
-                  checked = checked || this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected;
+                  this.checked = this.checked || this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected;
+                  
               })
             }
           }) 
           
       }
   });
-  return checked;
+  console.warn(this.checked);
+  return this.checked;
 
 }
   isCheckedPartition(app_id: string, service_id: string, partition_id: string){
@@ -244,8 +245,11 @@ export class ListServicesComponent implements OnInit {
           let service1 = this.selectedServices.AllMigEndpoints[index1].service_details.find((service, index2) => {
             if(service.service_id === service_id){
               let partition1 = this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details.find((partition, index3)=>{
-                
-                  this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected = !this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected;
+                  if(partition.migration_details.migrationMode === 1){
+                    this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected = false;
+                  }else{
+                    this.selectedServices.AllMigEndpoints[index1].service_details[index2].partition_details[index3].selected = true;
+                  }
                   
                 
               })
