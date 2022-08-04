@@ -20,12 +20,15 @@ export class APIurls{
     private serviceUrl_base = this.baseurl + "api/Applications/";
     private serviceUrl_rt = "/$/GetServices?api-version=6.0";
 
-    private migrationProgressUrl_base = this.baseurl +"fmp";   
     private migrationProgressUrl_rt = "/RcMigration/GetMigrationStatus";
 
-    private migrationEndpoint = '';
-    private abortMigration_rt = "/RcMigration/StartMigration";
-    private abortMigration_base = "fmp";
+    private abortMigration_rt = "/RcMigration/AbortMigration";
+
+    private startMigration_rt = "/RcMigration/StartMigration";
+
+    private invokeDowntime_rt = "/RcMigration/StartDowntime";
+
+
 
 
 
@@ -46,25 +49,25 @@ export class APIurls{
     }
 
     getMigrationUrl(MigrationEndpoint: string){
-        var i = 7
-        for(var i = 7; i < MigrationEndpoint.length; i++){
-            if(MigrationEndpoint[i] == '/')     {break;}
-        }
-        var mig = MigrationEndpoint.slice(i);
-        this.migrationEndpoint =  mig;
-        return this.migrationProgressUrl_base+ this.migrationEndpoint + this.migrationProgressUrl_rt;
+        // var i = 7
+        // for(var i = 7; i < MigrationEndpoint.length; i++){
+        //     if(MigrationEndpoint[i] == '/')     {break;}
+        // }
+        // var mig = MigrationEndpoint.slice(i);
+       
+        return MigrationEndpoint + this.migrationProgressUrl_rt;
     }
-    getAbortMigrationUrl(){
-        console.log(this.abortMigration_base + this.migrationEndpoint + this.abortMigration_rt);
-        return this.abortMigration_base + this.migrationEndpoint + this.abortMigration_rt;
-    }
-
-    getStartMigraitonUrl(){
-
+    getAbortMigrationUrl(MigrationEndpoint: string){
+        return MigrationEndpoint + this.abortMigration_rt;
     }
 
-    getStartDowntimeUrl(){
-        
+    getStartMigraitonUrl(MigrationEndpoint: string){
+        console.log(MigrationEndpoint);
+        return MigrationEndpoint + this.startMigration_rt;
+    }
+
+    getStartDowntimeUrl(MigrationEndpoint: string){
+        return MigrationEndpoint + this.invokeDowntime_rt;        
     }
 
 }
