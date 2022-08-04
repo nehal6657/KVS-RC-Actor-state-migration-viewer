@@ -7,13 +7,5 @@
       "pathRewrite": {
         "^/api": ""
       }
-    },
-    "/fmp/*": {
-      "target": "http://localhost:30006/",
-      "secure": true,
-      "changeOrigin": true,
-      "pathRewrite": {
-        "^/fmp": ""
-      }
     }
 }
