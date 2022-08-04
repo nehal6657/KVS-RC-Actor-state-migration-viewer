@@ -31,13 +31,13 @@ export class GetMigrationListenerService {
    FetchMigrationProgress(migrationEndpoint: string){
     return this.http.get<any>(this.ApiUrls.getMigrationUrl(migrationEndpoint));
    }
-   abortMigration(){
-    return this.http.put<any>('fmp/RcMigration/AbortMigration', {});
+   abortMigration(migrationEndpoint: string){
+    return this.http.put<any>(this.ApiUrls.getAbortMigrationUrl(migrationEndpoint), {});
    }
-   startMigration(){
-    return this.http.put<any>('fmp/RcMigration/StartMigration', {});
+   startMigration(migrationEndpoint: string){
+    return this.http.put<any>(this.ApiUrls.getStartMigraitonUrl(migrationEndpoint), {});
    }
-   invokeDowntime(){
-    return this.http.put<any>('fmp/RcMigration/StartDowntime', {});
+   invokeDowntime(migrationEndpoint: string){
+    return this.http.put<any>(this.ApiUrls.getStartDowntimeUrl(migrationEndpoint), {});
    }
 }
